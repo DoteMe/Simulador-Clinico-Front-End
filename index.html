@@ -54,24 +54,52 @@
           <article class="card">
             <h2 class="card__title">Sinais vitais</h2>
             <ul class="vitals-grid">
-              <li class="vital-item">
-                <span class="vital-item__label">PA</span>
-                <span class="vital-item__value">154/92 <small>mmHg</small></span>
+              <li class="vital-item vital-item--danger">
+                <span class="vital-item__gauge" aria-hidden="true">
+                  <span class="vital-item__gauge-track">
+                    <span class="vital-item__gauge-fill" style="height: 80%;"></span>
+                  </span>
+                </span>
+                <span class="vital-item__info">
+                  <span class="vital-item__label">PA</span>
+                  <span class="vital-item__value">154/92 <small>mmHg</small></span>
+                </span>
                 <span class="vital-item__trend vital-item__trend--up" title="Em elevação" aria-label="Em elevação">↗</span>
               </li>
-              <li class="vital-item">
-                <span class="vital-item__label">FC</span>
-                <span class="vital-item__value">101 <small>bpm</small></span>
+              <li class="vital-item vital-item--danger">
+                <span class="vital-item__gauge" aria-hidden="true">
+                  <span class="vital-item__gauge-track">
+                    <span class="vital-item__gauge-fill" style="height: 55%;"></span>
+                  </span>
+                </span>
+                <span class="vital-item__info">
+                  <span class="vital-item__label">FC</span>
+                  <span class="vital-item__value">101 <small>bpm</small></span>
+                </span>
                 <span class="vital-item__trend vital-item__trend--up" title="Em elevação" aria-label="Em elevação">↗</span>
               </li>
-              <li class="vital-item">
-                <span class="vital-item__label">FR</span>
-                <span class="vital-item__value">18 <small>irpm</small></span>
+              <li class="vital-item vital-item--danger">
+                <span class="vital-item__gauge" aria-hidden="true">
+                  <span class="vital-item__gauge-track">
+                    <span class="vital-item__gauge-fill" style="height: 46%;"></span>
+                  </span>
+                </span>
+                <span class="vital-item__info">
+                  <span class="vital-item__label">FR</span>
+                  <span class="vital-item__value">18 <small>irpm</small></span>
+                </span>
                 <span class="vital-item__trend vital-item__trend--up" title="Em elevação" aria-label="Em elevação">↗</span>
               </li>
-              <li class="vital-item">
-                <span class="vital-item__label">SpO₂</span>
-                <span class="vital-item__value">96<small>%</small></span>
+              <li class="vital-item vital-item--warning">
+                <span class="vital-item__gauge" aria-hidden="true">
+                  <span class="vital-item__gauge-track">
+                    <span class="vital-item__gauge-fill" style="height: 96%;"></span>
+                  </span>
+                </span>
+                <span class="vital-item__info">
+                  <span class="vital-item__label">SpO₂</span>
+                  <span class="vital-item__value">96<small>%</small></span>
+                </span>
                 <span class="vital-item__trend vital-item__trend--down" title="Em queda" aria-label="Em queda">↘</span>
               </li>
             </ul>
@@ -81,18 +109,14 @@
             <h2 class="card__title">Sintomas <span class="card__title-count">(2)</span></h2>
             <ul class="symptoms-list">
               <li class="symptom symptom--high">
-                <div class="symptom__row">
-                  <span class="symptom__name">Dor torácica</span>
-                  <span class="symptom__score">8.0/10</span>
-                </div>
-                <div class="symptom__bar"><span style="width: 80%;"></span></div>
+                <span class="symptom__score">8.0<small>/10</small></span>
+                <div class="symptom__bar"><span style="height: 80%;"></span></div>
+                <span class="symptom__name">Dor torácica</span>
               </li>
               <li class="symptom symptom--medium">
-                <div class="symptom__row">
-                  <span class="symptom__name">Sudorese fria</span>
-                  <span class="symptom__score">6.5/10</span>
-                </div>
-                <div class="symptom__bar"><span style="width: 65%;"></span></div>
+                <span class="symptom__score">6.5<small>/10</small></span>
+                <div class="symptom__bar"><span style="height: 65%;"></span></div>
+                <span class="symptom__name">Sudorese fria</span>
               </li>
             </ul>
 
