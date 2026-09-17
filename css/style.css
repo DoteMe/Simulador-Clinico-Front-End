@@ -208,6 +208,7 @@ input:focus-visible {
   display: flex;
   align-items: center;
   gap: var(--space-2);
+  color: rgb(91, 209, 215);
 }
 
 .brand__badge {
@@ -238,7 +239,7 @@ input:focus-visible {
 .brand__sub {
   display: none;
   font-size: var(--fs-xs);
-  color: var(--color-text-muted);
+  color: white;
 }
 
 .app-header__case {
@@ -269,11 +270,12 @@ input:focus-visible {
   font-size: var(--fs-xl);
   font-weight: 700;
   line-height: 1.2;
+  color: white;
 }
 
 .case-subtitle {
   font-size: var(--fs-xs);
-  color: var(--color-text-muted);
+  color: white;
 }
 
 .app-header__end {
@@ -289,7 +291,7 @@ input:focus-visible {
   gap: var(--space-1);
   font-variant-numeric: tabular-nums;
   font-weight: 600;
-  color: var(--color-text);
+  color: white;
 }
 
 .badge {
@@ -462,18 +464,107 @@ input:focus-visible {
 /* Grid de sinais vitais: 2 colunas mesmo no mobile (cards curtos) */
 .vitals-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-3);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
 }
 
 .vital-item {
   position: relative;
   display: flex;
-  flex-direction: column;
-  gap: 2px;
-  padding: var(--space-2) var(--space-3);
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 0;
+  padding: 0.75rem 0.65rem;
   background: var(--color-surface-alt);
   border-radius: var(--radius-sm);
+}
+
+/* ----- Medidor vertical (estilo barra de status de jogo) ----- */
+.vital-item__gauge {
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-end;
+  height: 3.5rem;
+}
+
+.vital-item__gauge-track {
+  position: relative;
+  width: 0.55rem;
+  height: 100%;
+  background: var(--color-navy-900);
+  border-radius: 999px;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(31, 58, 95, 0.18);
+}
+
+/* Marcações em degraus, como um medidor de energia de jogo */
+.vital-item__gauge-track::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    to top,
+    transparent 0,
+    transparent calc(20% - 1px),
+    rgba(255, 255, 255, 0.35) 20%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+.vital-item__gauge-fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  border-radius: 999px;
+  transition: height 0.4s ease;
+}
+
+/* Brilho no topo do preenchimento, efeito "vidro" de HUD */
+.vital-item__gauge-fill::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0));
+  border-radius: 999px 999px 0 0;
+}
+
+.vital-item--danger .vital-item__gauge-fill {
+  background: linear-gradient(180deg, #ff7a7a, var(--color-danger-bar));
+  box-shadow: 0 0 10px rgba(217, 59, 59, 0.55);
+  animation: pulse-gauge 1.6s ease-in-out infinite;
+}
+
+.vital-item--warning .vital-item__gauge-fill {
+  background: linear-gradient(180deg, #ffc266, var(--color-warning-bar));
+  box-shadow: 0 0 8px rgba(217, 138, 31, 0.4);
+}
+
+.vital-item--stable .vital-item__gauge-fill {
+  background: linear-gradient(180deg, #6fe3a6, var(--color-success));
+}
+
+@keyframes pulse-gauge {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.3); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vital-item__gauge-fill {
+    animation: none !important;
+  }
+}
+
+.vital-item__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
 }
 
 .vital-item__label {
@@ -482,12 +573,16 @@ input:focus-visible {
 }
 
 .vital-item__value {
-  font-size: var(--fs-lg);
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+  font-size: 1.1rem;
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .vital-item__value small {
-  font-size: var(--fs-xs);
+  font-size: 0.65rem;
   font-weight: 400;
   color: var(--color-text-muted);
 }
@@ -507,65 +602,108 @@ input:focus-visible {
   color: var(--color-warning);
 }
 
-/* Lista de sintomas */
+/* Lista de sintomas: barras verticais lado a lado (estilo status de jogo) */
 .symptoms-list {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
+  align-items: flex-end;
+  justify-content: center;
+  gap: var(--space-5);
+  height: 11rem;
+  padding-top: var(--space-2);
   margin-bottom: var(--space-3);
 }
 
 .symptom {
-  padding: var(--space-3);
-  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  width: 5.5rem;
+  height: 100%;
 }
 
-.symptom__row {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: var(--space-2);
+.symptom__score {
   font-size: var(--fs-sm);
-  font-weight: 600;
+  font-weight: 700;
+}
+
+.symptom__score small {
+  font-size: var(--fs-xs);
+  font-weight: 400;
+  color: var(--color-text-muted);
 }
 
 .symptom__bar {
-  height: 6px;
+  position: relative;
+  width: 1.75rem;
+  flex: 1;
+  background: var(--color-navy-900);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
   overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(31, 58, 95, 0.18);
+}
+
+/* Marcações em degraus, como um medidor de energia de jogo */
+.symptom__bar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    to top,
+    transparent 0,
+    transparent calc(12.5% - 1px),
+    rgba(255, 255, 255, 0.3) 12.5%
+  );
+  z-index: 2;
+  pointer-events: none;
 }
 
 .symptom__bar span {
+  position: absolute;
+  bottom: 0;
+  left: 0;
   display: block;
-  height: 100%;
-  border-radius: inherit;
+  width: 100%;
+  border-radius: 999px;
+  transition: height 0.4s ease;
 }
 
-.symptom--high {
-  background: var(--color-danger-bg);
+/* Brilho no topo do preenchimento, efeito "vidro" de HUD */
+.symptom__bar span::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 35%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
+  border-radius: 999px 999px 0 0;
 }
 
-.symptom--high .symptom__name,
+.symptom__name {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.25;
+  color: var(--color-text-muted);
+}
+
 .symptom--high .symptom__score {
   color: var(--color-danger);
 }
 
 .symptom--high .symptom__bar span {
-  background: var(--color-danger-bar);
+  background: linear-gradient(180deg, #ff7a7a, var(--color-danger-bar));
+  box-shadow: 0 0 10px rgba(217, 59, 59, 0.5);
 }
 
-.symptom--medium {
-  background: var(--color-warning-bg);
-}
-
-.symptom--medium .symptom__name,
 .symptom--medium .symptom__score {
   color: var(--color-warning);
 }
 
 .symptom--medium .symptom__bar span {
-  background: var(--color-warning-bar);
+  background: linear-gradient(180deg, #ffc266, var(--color-warning-bar));
+  box-shadow: 0 0 8px rgba(217, 138, 31, 0.35);
 }
 
 .clinical-hint {
