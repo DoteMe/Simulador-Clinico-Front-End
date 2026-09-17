@@ -10,124 +10,134 @@
 </head>
 <body>
 
-  
-  <div class="app">
-    <header class="app-header">
-      <div class="app-header__start">
-        <button class="icon-btn nav-toggle" type="button" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="sidebar">
-          <span class="icon-btn__bar"></span>
-          <span class="icon-btn__bar"></span>
-          <span class="icon-btn__bar"></span>
-        </button>
-        <a class="brand" href="index.html">
-          <span class="brand__badge" aria-hidden="true">HM</span>
-          <span class="brand__text">
-            <span class="brand__name">LXP Moinhos</span>
-            <span class="brand__sub">Hospital Moinhos de Vento</span>
-          </span>
-        </a>
-      </div>
+  <a class="link-pular" href="#painel-conversa">Pular para a conversa com o paciente</a>
 
-      <div class="app-header__case" aria-hidden="false">
-        <div>
-          <h1 class="case-title">Simulador — Dor Torácica</h1>
-          <p class="case-subtitle">Carlos Mendes (paciente simulado)</p>
+  <div class="aplicativo">
+
+    <!-- ===================== CABEÇALHO ===================== -->
+    <header class="cabecalho">
+      <div class="cabecalho__inicio">
+        <a class="marca" href="index.html">
+          <span class="marca__selo" aria-hidden="true">HM</span>
+          <span class="marca__nome">LXP Moinhos</span>
+        </a>
+
+        <div class="cabecalho__caso">
+          <h1 class="titulo-caso">Simulador — Dor Torácica</h1>
+          <p class="subtitulo-caso">Carlos Mendes (paciente simulado)</p>
         </div>
       </div>
 
-      <div class="app-header__end">
-        <span class="timer" title="Tempo restante da simulação">
-          <span class="timer__icon" aria-hidden="true">⏱</span>
-          <span class="timer__value">4:59</span>
+      <div class="cabecalho__fim">
+        <span class="cronometro" title="Tempo restante da simulação">
+          <span class="cronometro__icone" aria-hidden="true">⏱</span>
+          <span class="cronometro__valor">4:59</span>
         </span>
-        <span class="badge badge--danger">Instável</span>
+        <span class="selo selo--perigo">Instável</span>
       </div>
     </header>
 
-    
-      <!-- ===================== MAIN ===================== -->
-      <main class="simulator" id="main-content">
+    <!-- ===================== CONTEÚDO PRINCIPAL ===================== -->
+    <main class="simulador" id="conteudo-principal">
 
-        <!-- Painel clínico: sinais vitais + sintomas -->
-        <section class="clinical-panel" aria-label="Estado clínico do paciente">
+      <!-- Painel clínico: sinais vitais + sintomas -->
+      <section class="painel-clinico" aria-label="Estado clínico do paciente">
 
-          <article class="card">
-            <h2 class="card__title">Sinais vitais</h2>
-            <ul class="vitals-grid">
-              <li class="vital-item">
-                <span class="vital-item__label">PA</span>
-                <span class="vital-item__value">154/92 <small>mmHg</small></span>
-                <span class="vital-item__trend vital-item__trend--up" title="Em elevação" aria-label="Em elevação">↗</span>
-              </li>
-              <li class="vital-item">
-                <span class="vital-item__label">FC</span>
-                <span class="vital-item__value">101 <small>bpm</small></span>
-                <span class="vital-item__trend vital-item__trend--up" title="Em elevação" aria-label="Em elevação">↗</span>
-              </li>
-              <li class="vital-item">
-                <span class="vital-item__label">FR</span>
-                <span class="vital-item__value">18 <small>irpm</small></span>
-                <span class="vital-item__trend vital-item__trend--up" title="Em elevação" aria-label="Em elevação">↗</span>
-              </li>
-              <li class="vital-item">
-                <span class="vital-item__label">SpO₂</span>
-                <span class="vital-item__value">96<small>%</small></span>
-                <span class="vital-item__trend vital-item__trend--down" title="Em queda" aria-label="Em queda">↘</span>
-              </li>
-            </ul>
-          </article>
-
-          <article class="card">
-            <h2 class="card__title">Sintomas <span class="card__title-count">(2)</span></h2>
-            <ul class="symptoms-list">
-              <li class="symptom symptom--high">
-                <div class="symptom__row">
-                  <span class="symptom__name">Dor torácica</span>
-                  <span class="symptom__score">8.0/10</span>
-                </div>
-                <div class="symptom__bar"><span style="width: 80%;"></span></div>
-              </li>
-              <li class="symptom symptom--medium">
-                <div class="symptom__row">
-                  <span class="symptom__name">Sudorese fria</span>
-                  <span class="symptom__score">6.5/10</span>
-                </div>
-                <div class="symptom__bar"><span style="width: 65%;"></span></div>
-              </li>
-            </ul>
-
-
-            <button class="btn btn--ghost btn--block" type="button">Protocolos</button>
-          </article>
-        </section>
-
-        <!-- Conversa com o paciente -->
-        <section class="chat-panel" id="chat-panel" aria-label="Conversa com o paciente simulado">
-
-          <ol class="chat-log">
-            <li class="message message--ai">
-              <span class="message__author">IA</span>
-              <p class="message__text">Simulação iniciada. Tempo disponível: 5:00. Investigue e trate o paciente — o quadro evolui se você demorar.</p>
+        <article class="cartao">
+          <h2 class="cartao__titulo">Sinais vitais</h2>
+          <ul class="sinais-vitais">
+            <li class="sinal-vital">
+              <div class="sinal-vital__barra">
+                <span class="sinal-vital__barra-preenchimento sinal-vital__barra-preenchimento--alta"
+                      title="Em elevação" aria-label="Em elevação, acima do normal"></span>
+              </div>
+              <div class="sinal-vital__conteudo">
+                <span class="sinal-vital__rotulo">PA</span>
+                <span class="sinal-vital__valor">154/92 <small>mmHg</small></span>
+              </div>
             </li>
-            <li class="message message--patient">
-              <span class="message__author">Paciente</span>
-              <p class="message__text">Doutor(a), estou com uma dor forte no peito há umas duas horas... Estou suando frio e com medo.</p>
+            <li class="sinal-vital">
+              <div class="sinal-vital__barra">
+                <span class="sinal-vital__barra-preenchimento sinal-vital__barra-preenchimento--alta"
+                      title="Em elevação" aria-label="Em elevação, acima do normal"></span>
+              </div>
+              <div class="sinal-vital__conteudo">
+                <span class="sinal-vital__rotulo">FC</span>
+                <span class="sinal-vital__valor">101 <small>bpm</small></span>
+              </div>
             </li>
-          </ol>
+            <li class="sinal-vital">
+              <div class="sinal-vital__barra">
+                <span class="sinal-vital__barra-preenchimento sinal-vital__barra-preenchimento--alta"
+                      title="Em elevação" aria-label="Em elevação, acima do normal"></span>
+              </div>
+              <div class="sinal-vital__conteudo">
+                <span class="sinal-vital__rotulo">FR</span>
+                <span class="sinal-vital__valor">18 <small>irpm</small></span>
+              </div>
+            </li>
+            <li class="sinal-vital">
+              <div class="sinal-vital__barra">
+                <span class="sinal-vital__barra-preenchimento sinal-vital__barra-preenchimento--baixa"
+                      title="Em queda" aria-label="Em queda, abaixo do normal"></span>
+              </div>
+              <div class="sinal-vital__conteudo">
+                <span class="sinal-vital__rotulo">SpO₂</span>
+                <span class="sinal-vital__valor">96<small>%</small></span>
+              </div>
+            </li>
+          </ul>
+        </article>
 
-          <div class="chat-input">
-            <label class="sr-only" for="chat-message">Escreva uma pergunta, investigação ou conduta</label>
-            <input class="chat-input__field" id="chat-message" type="text"
-                   placeholder="Pergunte, investigue ou indique conduta…">
-            <button class="btn btn--send" type="button" aria-label="Enviar mensagem">➤</button>
-          </div>
-        </section>
+        <article class="cartao">
+          <h2 class="cartao__titulo">Sintomas <span class="cartao__titulo-contagem">(2)</span></h2>
+          <ul class="lista-sintomas">
+            <li class="sintoma sintoma--alto">
+              <div class="sintoma__linha">
+                <span class="sintoma__nome">Dor torácica</span>
+                <span class="sintoma__pontuacao">8.0/10</span>
+              </div>
+              <div class="sintoma__barra"><span style="width: 80%;"></span></div>
+            </li>
+            <li class="sintoma sintoma--medio">
+              <div class="sintoma__linha">
+                <span class="sintoma__nome">Sudorese fria</span>
+                <span class="sintoma__pontuacao">6.5/10</span>
+              </div>
+              <div class="sintoma__barra"><span style="width: 65%;"></span></div>
+            </li>
+          </ul>
 
-      </main>
-    </div>
+          <button class="botao botao--suave botao--bloco" type="button">Protocolos</button>
+        </article>
+      </section>
 
-    <!-- ===================== FOOTER ===================== -->
-    <footer class="app-footer">
+      <!-- Conversa com o paciente -->
+      <section class="painel-conversa" id="painel-conversa" aria-label="Conversa com o paciente simulado">
+
+        <ol class="registro-conversa">
+          <li class="mensagem mensagem--ia">
+            <span class="mensagem__autor">IA</span>
+            <p class="mensagem__texto">Simulação iniciada. Tempo disponível: 5:00. Investigue e trate o paciente — o quadro evolui se você demorar.</p>
+          </li>
+          <li class="mensagem mensagem--paciente">
+            <span class="mensagem__autor">Paciente</span>
+            <p class="mensagem__texto">Doutor(a), estou com uma dor forte no peito há umas duas horas... Estou suando frio e com medo.</p>
+          </li>
+        </ol>
+
+        <div class="entrada-conversa">
+          <label class="apenas-leitor-de-tela" for="campo-mensagem">Escreva uma pergunta, investigação ou conduta</label>
+          <input class="entrada-conversa__campo" id="campo-mensagem" type="text"
+                 placeholder="Pergunte, investigue ou indique conduta…">
+          <button class="botao botao--enviar" type="button" aria-label="Enviar mensagem">➤</button>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ===================== RODAPÉ ===================== -->
+    <footer class="rodape">
       <p>FIAP · Engenharia de Software · Challenge Hospital Moinhos de Vento · Sprint 3</p>
     </footer>
   </div>

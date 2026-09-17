@@ -3,69 +3,72 @@
 /* =======================================================================
    LXP MOINHOS · SIMULADOR CLÍNICO
    Front-End Design — Sprint 3 (MVP Visual, mockado)
-   Abordagem: Mobile First · CSS puro (Flexbox + Grid) · sem frameworks
+   Tema: claro · Foco atual: desktop, sem rolagem (uma tela só)
+   CSS puro — Flexbox + Grid, sem frameworks
+   Nomenclatura padronizada em português (variáveis, classes e ids)
    ======================================================================= */
 
-/* ---------- 1. VARIÁVEIS GLOBAIS (DESIGN TOKENS) ---------- */
+/* ---------- 1. VARIÁVEIS GLOBAIS (TOKENS DE DESIGN) ---------- */
 :root {
-  /* Paleta de marca (baseada no documento de identidade visual) */
-  --color-navy-900: #1F3A5F;
-  --color-navy-800: #1E3554;
-  --color-navy-700: #2A4F7C;
+  /* Paleta de marca */
+  --cor-marinho-900: #1f3a5f;
+  --cor-marinho-800: #1e3554;
+  --cor-marinho-700: #2a4f7c;
 
-  --color-primary: #005BBF;
-  --color-primary-soft: #E6F0FF;
+  --cor-primaria: #005bbf;
+  --cor-primaria-suave: #e6f0ff;
 
-  --color-accent: #ED145B;
-  --color-accent-dark: #C90F4D;
-  --color-accent-soft: rgba(237, 20, 91, 0.12);
+  --cor-destaque: #ed145b;
+  --cor-destaque-escuro: #c90f4d;
 
   /* Superfícies (tema claro) */
-  --color-bg: #FFFFFF;
-  --color-surface: #FFFFFF;
-  --color-surface-alt: #F5F7FA;
-  --color-border: #DADDE3;
+  --cor-fundo: #ffffff;
+  --cor-superficie: #ffffff;
+  --cor-superficie-alt: #f5f7fa;
+  --cor-borda: #dadde3;
 
   /* Texto */
-  --color-text: #2B2B2B;
-  --color-text-muted: #677285;
-  --color-text-soft: #8B95A7;
+  --cor-texto: #2b2b2b;
+  --cor-texto-suave: #677285;
+  --cor-texto-fraco: #8b95a7;
 
-  /* Estados clínicos */
-  --color-danger: #D93B3B;
-  --color-danger-bg: rgba(217, 59, 59, 0.12);
-  --color-danger-bar: #D93B3B;
+  /* Estados clínicos (usados nos sinais vitais e nos sintomas) */
+  --cor-normal: #1e9d67;
+  --cor-alta: #d93b3b;
+  --cor-baixa: #2c6fe0;
 
-  --color-warning: #D98A1F;
-  --color-warning-bg: rgba(217, 138, 31, 0.12);
-  --color-warning-bar: #D98A1F;
+  --cor-perigo: #d93b3b;
+  --cor-perigo-fundo: rgba(217, 59, 59, 0.12);
+  --cor-perigo-barra: #d93b3b;
 
-  --color-success: #1E9D67;
+  --cor-alerta: #d98a1f;
+  --cor-alerta-fundo: rgba(217, 138, 31, 0.12);
+  --cor-alerta-barra: #d98a1f;
 
   /* Tipografia */
-  --font-base: "Inter", "Segoe UI", Roboto, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
-  --fs-xs: 0.875rem;
-  --fs-sm: 1rem;
-  --fs-md: 1.25rem;
-  --fs-lg: 1.5rem;
-  --fs-xl: 2rem;
+  --fonte-base: "Inter", "Segoe UI", Roboto, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  --fonte-xs: 0.6875rem;
+  --fonte-sm: 0.8125rem;
+  --fonte-md: 0.875rem;
+  --fonte-lg: 1rem;
+  --fonte-xl: 1.125rem;
 
-  /* Espaçamentos seguindo escala de 8px */
-  --space-1: 0.5rem;
-  --space-2: 1rem;
-  --space-3: 1.5rem;
-  --space-4: 2rem;
-  --space-5: 3rem;
-  --space-6: 4rem;
+  /* Espaçamentos (compactos, para caber em uma tela) */
+  --espaco-1: 0.25rem;
+  --espaco-2: 0.5rem;
+  --espaco-3: 0.75rem;
+  --espaco-4: 1rem;
+  --espaco-5: 1.25rem;
+  --espaco-6: 1.75rem;
 
   /* Layout */
-  --header-h: 4rem;
-  --sidebar-w: 15.5rem;
-  --clinical-panel-w: 21rem;
-  --radius-sm: 0.5rem;
-  --radius-md: 0.875rem;
-  --radius-lg: 1.25rem;
-  --shadow-card: 0 8px 24px rgba(31, 58, 95, 0.08);
+  --altura-cabecalho: 3.25rem;
+  --altura-rodape: 2.25rem;
+  --largura-painel-clinico: 30rem;
+  --raio-sm: 0.5rem;
+  --raio-md: 0.75rem;
+  --raio-lg: 1rem;
+  --sombra-cartao: 0 4px 14px rgba(31, 58, 95, 0.08);
 }
 
 /* ---------- 2. RESET / BASE ---------- */
@@ -82,11 +85,11 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: var(--font-base);
-  font-size: var(--fs-md);
-  line-height: 1.5;
-  background-color: var(--color-bg);
-  color: var(--color-text);
+  font-family: var(--fonte-base);
+  font-size: var(--fonte-md);
+  line-height: 1.45;
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
 }
 
 h1, h2, h3, p, ul, ol {
@@ -115,7 +118,7 @@ img {
 }
 
 /* Acessibilidade: apenas leitores de tela */
-.sr-only {
+.apenas-leitor-de-tela {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -127,665 +130,485 @@ img {
   border: 0;
 }
 
-.skip-link {
+.link-pular {
   position: absolute;
   top: -3rem;
-  left: var(--space-3);
-  background: var(--color-accent);
+  left: var(--espaco-3);
+  background: var(--cor-destaque);
   color: #fff;
-  padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-sm);
+  padding: var(--espaco-2) var(--espaco-4);
+  border-radius: var(--raio-sm);
   z-index: 100;
   transition: top 0.2s ease;
 }
 
-.skip-link:focus {
-  top: var(--space-3);
+.link-pular:focus {
+  top: var(--espaco-3);
 }
 
 /* Estado de foco visível e consistente em toda a interface */
 a:focus-visible,
 button:focus-visible,
 input:focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--cor-destaque);
   outline-offset: 2px;
 }
 
-/* ---------- 3. LAYOUT GERAL (mobile first) ---------- */
-.app {
+/* ---------- 3. LAYOUT GERAL ---------- */
+.aplicativo {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-/* ----- Header ----- */
-.app-header {
+/* ----- Cabeçalho ----- */
+.cabecalho {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-3);
-  flex-wrap: wrap;
-  min-height: var(--header-h);
-  padding: var(--space-3) var(--space-4);
-  background: linear-gradient(180deg, var(--color-navy-700), var(--color-navy-800));
-  border-bottom: 1px solid var(--color-navy-900);
-  position: sticky;
-  top: 0;
-  z-index: 20;
-}
-
-.app-header__start {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-}
-
-.icon-btn {
-  display: inline-flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 4px;
-  width: 2.25rem;
-  height: 2.25rem;
-  background: transparent;
-  border: none;
-  border-radius: var(--radius-sm);
-}
-
-.icon-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.icon-btn__bar {
-  width: 1.1rem;
-  height: 2px;
-  background: var(--color-text);
-  border-radius: 2px;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-}
-
-.brand__badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  border-radius: var(--radius-sm);
-  background: var(--color-accent);
+  gap: var(--espaco-4);
+  height: var(--altura-cabecalho);
+  padding: 0 var(--espaco-5);
+  background: linear-gradient(180deg, var(--cor-marinho-700), var(--cor-marinho-800));
   color: #fff;
-  font-weight: 700;
-  font-size: var(--fs-sm);
   flex-shrink: 0;
 }
 
-.brand__text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.2;
-}
-
-.brand__name {
-  font-weight: 700;
-  font-size: var(--fs-md);
-}
-
-.brand__sub {
-  display: none;
-  font-size: var(--fs-xs);
-  color: var(--color-text-muted);
-}
-
-.app-header__case {
+.cabecalho__inicio {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
-  order: 3;
-  width: 100%;
+  gap: var(--espaco-4);
+  min-width: 0;
 }
 
-.back-link {
+.marca {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  flex-shrink: 0;
+}
+
+.marca__selo {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.75rem;
-  height: 1.75rem;
-  border-radius: var(--radius-sm);
-  font-size: var(--fs-lg);
-  color: var(--color-text-muted);
-}
-
-.back-link:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--color-text);
-}
-
-.case-title {
-  font-size: var(--fs-xl);
+  width: 1.875rem;
+  height: 1.875rem;
+  border-radius: var(--raio-sm);
+  background: var(--cor-destaque);
+  color: #fff;
   font-weight: 700;
-  line-height: 1.2;
+  font-size: var(--fonte-xs);
+  flex-shrink: 0;
 }
 
-.case-subtitle {
-  font-size: var(--fs-xs);
-  color: var(--color-text-muted);
+.marca__nome {
+  font-weight: 700;
+  font-size: var(--fonte-md);
+  white-space: nowrap;
 }
 
-.app-header__end {
+.cabecalho__caso {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding-left: var(--espaco-4);
+  border-left: 1px solid rgba(255, 255, 255, 0.18);
+  line-height: 1.25;
+}
+
+.titulo-caso {
+  font-size: var(--fonte-lg);
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.subtitulo-caso {
+  font-size: var(--fonte-xs);
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.cabecalho__fim {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
-  margin-left: auto;
+  gap: var(--espaco-4);
+  flex-shrink: 0;
 }
 
-.timer {
+.cronometro {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-1);
+  gap: var(--espaco-1);
   font-variant-numeric: tabular-nums;
   font-weight: 600;
-  color: var(--color-text);
+  font-size: var(--fonte-md);
 }
 
-.badge {
+.selo {
   display: inline-flex;
   align-items: center;
-  padding: var(--space-1) var(--space-3);
+  padding: var(--espaco-1) var(--espaco-3);
   border-radius: 999px;
-  font-size: var(--fs-xs);
+  font-size: var(--fonte-xs);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.02em;
 }
 
-.badge--danger {
-  background: var(--color-danger-bg);
-  color: var(--color-danger);
-}
-
-/* ----- Shell: sidebar + conteúdo principal ----- */
-.app-shell {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Sidebar: escondida por padrão no mobile (navegação fica reservada para o menu),
-   ocupando o fluxo apenas a partir do breakpoint desktop. */
-.sidebar {
-  display: none;
-  flex-direction: column;
-  justify-content: space-between;
-  background: var(--color-navy-800);
-  border-right: 1px solid var(--color-navy-900);
-}
-
-.sidebar__scroll {
-  padding: var(--space-4) var(--space-3);
-  overflow-y: auto;
-}
-
-.nav-group {
-  margin-bottom: var(--space-5);
-}
-
-.nav-group__title {
-  padding: 0 var(--space-3);
-  margin-bottom: var(--space-2);
-  font-size: var(--fs-xs);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--color-text-soft);
-}
-
-.nav-list {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.nav-link {
-  display: block;
-  padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius-sm);
-  font-size: var(--fs-sm);
-  color: var(--color-text-muted);
-}
-
-.nav-link:hover {
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--color-text);
-}
-
-.nav-link.is-active {
-  background: var(--color-primary);
-  color: #fff;
-  font-weight: 600;
-}
-
-.sidebar__user {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-4) var(--space-3);
-  border-top: 1px solid var(--color-navy-900);
-}
-
-.avatar {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  border-radius: 50%;
-  background: var(--color-navy-700);
-  font-size: var(--fs-xs);
-  font-weight: 700;
-  flex-shrink: 0;
-}
-
-.sidebar__user-info {
-  min-width: 0;
-  flex: 1;
-}
-
-.sidebar__user-name {
-  font-size: var(--fs-sm);
-  font-weight: 600;
-}
-
-.sidebar__user-role {
-  font-size: var(--fs-xs);
-  color: var(--color-text-muted);
-  margin-bottom: var(--space-2);
-}
-
-.progress-bar {
-  width: 100%;
-  height: 5px;
-  border-radius: 999px;
-  background: var(--color-navy-900);
-  overflow: hidden;
-}
-
-.progress-bar__fill {
-  display: block;
-  height: 100%;
-  background: var(--color-accent);
-  border-radius: inherit;
+.selo--perigo {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffd4d4;
 }
 
 /* ----- Conteúdo principal do simulador ----- */
-.simulator {
+.simulador {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-  padding: var(--space-4);
-  min-width: 0;
+  display: grid;
+  grid-template-columns: var(--largura-painel-clinico) 1fr;
+  align-items: start;
+  gap: 2.5rem;
+  padding-top: 1rem;
+  padding-left: 10rem;
+  max-width: 105rem;
+  /* width: 100%; */
+  margin: 0;
+  min-height: 0;
 }
 
 /* Painel clínico (sinais vitais + sintomas) */
-.clinical-panel {
+.painel-clinico {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: var(--espaco-3);
+  min-width: 0;
+  
 }
 
-.card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: var(--space-4);
-  box-shadow: var(--shadow-card);
+.cartao {
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  padding: var(--espaco-2) var(--espaco-3);
+  box-shadow: var(--sombra-cartao);
+  
 }
 
-.card__title {
-  font-size: var(--fs-xs);
+.cartao__titulo {
+  font-size: var(--fonte-xs);
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--color-text-muted);
-  margin-bottom: var(--space-3);
+  letter-spacing: 0.05em;
+  color: var(--cor-texto-suave);
+  margin-bottom: var(--espaco-3);
 }
 
-.card__title-count {
-  color: var(--color-text-soft);
+.cartao__titulo-contagem {
+  color: var(--cor-texto-fraco);
   text-transform: none;
   letter-spacing: normal;
-}
-
-/* Grid de sinais vitais: 2 colunas mesmo no mobile (cards curtos) */
-.vitals-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-3);
-}
-
-.vital-item {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  padding: var(--space-2) var(--space-3);
-  background: var(--color-surface-alt);
-  border-radius: var(--radius-sm);
-}
-
-.vital-item__label {
-  font-size: var(--fs-xs);
-  color: var(--color-text-muted);
-}
-
-.vital-item__value {
-  font-size: var(--fs-lg);
-  font-weight: 700;
-}
-
-.vital-item__value small {
-  font-size: var(--fs-xs);
   font-weight: 400;
-  color: var(--color-text-muted);
 }
 
-.vital-item__trend {
-  position: absolute;
-  top: var(--space-2);
-  right: var(--space-2);
-  font-weight: 700;
-}
-
-.vital-item__trend--up {
-  color: var(--color-danger);
-}
-
-.vital-item__trend--down {
-  color: var(--color-warning);
-}
-
-/* Lista de sintomas */
-.symptoms-list {
+/* ----- Sinais vitais: retângulo horizontal segmentado ----- */
+.sinais-vitais {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  margin-bottom: var(--space-3);
-}
-
-.symptom {
-  padding: var(--space-3);
-  border-radius: var(--radius-sm);
-}
-
-.symptom__row {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: var(--space-2);
-  font-size: var(--fs-sm);
-  font-weight: 600;
-}
-
-.symptom__bar {
-  height: 6px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
+  flex-direction: row;
+  background: var(--cor-superficie-alt);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-sm);
   overflow: hidden;
 }
 
-.symptom__bar span {
+.sinal-vital {
+  flex: 1;
+  min-width: 0;
+  min-height: 4.75rem;
+  display: flex;
+  align-items: stretch;
+  gap: var(--espaco-4);
+  padding: var(--espaco-3) var(--espaco-2) var(--espaco-3) var(--espaco-2);
+  border-left: 1px solid var(--cor-borda);
+}
+
+.sinal-vital:first-child {
+  border-left: none;
+  padding-left: var(--espaco-1);
+}
+
+.sinal-vital__conteudo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1px;
+  min-width: 0;
+}
+
+.sinal-vital__rotulo {
+  font-size: var(--fonte-xs);
+  color: var(--cor-texto-suave);
+}
+
+.sinal-vital__valor {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--cor-texto);
+  white-space: nowrap;
+  line-height: 1.3;
+}
+
+.sinal-vital__valor small {
+  display: block;
+  font-size: 0.625rem;
+  font-weight: 400;
+  color: var(--cor-texto-suave);
+}
+
+/* Barra indicadora vertical: funciona como um nível que enche de baixo
+   para cima. Quanto maior o preenchimento, maior o valor do sinal. Uma
+   marca central indica a faixa de referência "normal"; preenchimento até
+   essa marca = verde (normal); ultrapassando a marca para cima = vermelho
+   (acima do normal); preenchimento bem abaixo da marca = azul (abaixo do
+   normal). */
+.sinal-vital__barra {
+  position: relative;
+  width: 5px;
+  flex-shrink: 0;
+  align-self: stretch;
+  border-radius: 999px;
+  background: rgba(20, 30, 45, 0.08);
+  overflow: visible;
+}
+
+.sinal-vital__barra::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -2px;
+  right: -2px;
+  height: 1px;
+  background: rgba(20, 30, 45, 0.18);
+  transform: translateY(-50%);
+}
+
+.sinal-vital__barra-preenchimento {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 999px;
+}
+
+.sinal-vital__barra-preenchimento--normal {
+  height: 50%;
+  background: var(--cor-normal);
+}
+
+.sinal-vital__barra-preenchimento--alta {
+  height: 85%;
+  background: var(--cor-alta);
+}
+
+.sinal-vital__barra-preenchimento--baixa {
+  height: 20%;
+  background: var(--cor-baixa);
+}
+
+/* ----- Sintomas (mantido como estava — apenas nomenclatura em português) ----- */
+.lista-sintomas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+  margin-bottom: var(--espaco-3);
+}
+
+.sintoma {
+  padding: var(--espaco-2) var(--espaco-3);
+  border-radius: var(--raio-sm);
+}
+
+.sintoma__linha {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--espaco-2);
+  font-size: var(--fonte-sm);
+  font-weight: 600;
+}
+
+.sintoma__barra {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.sintoma__barra span {
   display: block;
   height: 100%;
   border-radius: inherit;
 }
 
-.symptom--high {
-  background: var(--color-danger-bg);
+.sintoma--alto {
+  background: var(--cor-perigo-fundo);
 }
 
-.symptom--high .symptom__name,
-.symptom--high .symptom__score {
-  color: var(--color-danger);
+.sintoma--alto .sintoma__nome,
+.sintoma--alto .sintoma__pontuacao {
+  color: var(--cor-perigo);
 }
 
-.symptom--high .symptom__bar span {
-  background: var(--color-danger-bar);
+.sintoma--alto .sintoma__barra span {
+  background: var(--cor-perigo-barra);
 }
 
-.symptom--medium {
-  background: var(--color-warning-bg);
+.sintoma--medio {
+  background: var(--cor-alerta-fundo);
 }
 
-.symptom--medium .symptom__name,
-.symptom--medium .symptom__score {
-  color: var(--color-warning);
+.sintoma--medio .sintoma__nome,
+.sintoma--medio .sintoma__pontuacao {
+  color: var(--cor-alerta);
 }
 
-.symptom--medium .symptom__bar span {
-  background: var(--color-warning-bar);
-}
-
-.clinical-hint {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-2);
-  font-size: var(--fs-xs);
-  color: var(--color-text-muted);
-  margin-bottom: var(--space-4);
+.sintoma--medio .sintoma__barra span {
+  background: var(--cor-alerta-barra);
 }
 
 /* Botões */
-.btn {
+.botao {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-2);
-  padding: var(--space-3) var(--space-4);
+  gap: var(--espaco-2);
+  padding: var(--espaco-2) var(--espaco-4);
   border: 1px solid transparent;
-  border-radius: var(--radius-sm);
-  font-size: var(--fs-sm);
+  border-radius: var(--raio-sm);
+  font-size: var(--fonte-sm);
   font-weight: 600;
   transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.05s ease;
 }
 
-.btn:active {
+.botao:active {
   transform: translateY(1px);
 }
 
-.btn--block {
+.botao--bloco {
   width: 100%;
 }
 
-.btn--ghost {
-  background: var(--color-primary-soft);
+.botao--suave {
+  background: var(--cor-primaria-suave);
   border-color: transparent;
-  color: var(--color-primary);
+  color: var(--cor-primaria);
 }
 
-.btn--ghost:hover {
+.botao--suave:hover {
   background: #d9eaff;
-  border-color: transparent;
-  color: var(--color-primary);
 }
 
-.btn--send {
-  width: 2.75rem;
-  height: 2.75rem;
+.botao--enviar {
+  width: 2.5rem;
+  height: 2.5rem;
   padding: 0;
-  border-radius: var(--radius-sm);
-  background: var(--color-accent);
+  border-radius: var(--raio-sm);
+  background: var(--cor-destaque);
   color: #fff;
   flex-shrink: 0;
 }
 
-.btn--send:hover {
-  background: var(--color-accent-dark);
+.botao--enviar:hover {
+  background: var(--cor-destaque-escuro);
 }
 
 /* Painel de conversa */
-.chat-panel {
+.painel-conversa {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: var(--space-4);
-  min-height: 24rem;
+  gap: var(--espaco-3);
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  padding: var(--espaco-5);
+  box-shadow: var(--sombra-cartao);
+  min-height: calc(100vh - var(--altura-cabecalho) - var(--altura-rodape) - (var(--espaco-4) * 2));
 }
 
-.chat-log {
+.registro-conversa {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: var(--espaco-3);
   overflow-y: auto;
 }
 
-.message {
+.mensagem {
   max-width: 34rem;
-  padding: var(--space-3);
-  border-radius: var(--radius-md);
-  background: var(--color-surface-alt);
+  padding: var(--espaco-3);
+  border-radius: var(--raio-md);
+  background: var(--cor-superficie-alt);
 }
 
-.message__author {
+.mensagem__autor {
   display: block;
-  font-size: var(--fs-xs);
+  font-size: var(--fonte-xs);
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--color-text-soft);
-  margin-bottom: var(--space-1);
+  letter-spacing: 0.05em;
+  color: var(--cor-texto-fraco);
+  margin-bottom: var(--espaco-1);
 }
 
-.message__text {
-  font-size: var(--fs-sm);
-  color: var(--color-text);
+.mensagem__texto {
+  font-size: var(--fonte-sm);
+  color: var(--cor-texto);
 }
 
-.message--patient {
-  background: rgba(228, 53, 111, 0.1);
-  border: 1px solid var(--color-accent-soft);
+.mensagem--paciente {
+  background: var(--cor-primaria-suave);
 }
 
-.message--patient .message__author {
-  color: var(--color-accent);
+.mensagem--paciente .mensagem__autor {
+  color: var(--cor-primaria);
 }
 
-/* Campo de digitação (fixo na base no mobile) */
-.chat-input {
+/* Campo de digitação */
+.entrada-conversa {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
-  padding-top: var(--space-3);
-  border-top: 1px solid var(--color-border);
+  gap: var(--espaco-2);
+  padding-top: var(--espaco-3);
+  border-top: 1px solid var(--cor-borda);
 }
 
-.chat-input__field {
+.entrada-conversa__campo {
   flex: 1;
   min-width: 0;
-  padding: var(--space-3);
-  background: var(--color-surface-alt);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  color: var(--color-text);
-  font-size: var(--fs-sm);
+  padding: var(--espaco-2) var(--espaco-3);
+  background: var(--cor-superficie-alt);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-sm);
+  color: var(--cor-texto);
+  font-size: var(--fonte-sm);
 }
 
-.chat-input__field::placeholder {
-  color: var(--color-text-soft);
+.entrada-conversa__campo::placeholder {
+  color: var(--cor-texto-fraco);
 }
 
-.chat-input__field:focus-visible {
-  border-color: var(--color-accent);
+.entrada-conversa__campo:focus-visible {
+  border-color: var(--cor-destaque);
 }
 
 /* Rodapé */
-.app-footer {
-  padding: var(--space-4);
-  text-align: center;
-  font-size: var(--fs-xs);
-  color: var(--color-text-soft);
-  border-top: 1px solid var(--color-border);
-}
-
-.app-footer p + p {
-  margin-top: var(--space-1);
-}
-
-/* =======================================================================
-   4. MEDIA QUERIES — MOBILE FIRST
-   Breakpoints: tablet ≥ 768px · desktop ≥ 1024px
-   ======================================================================= */
-
-/* ----- Tablet: painel clínico e chat lado a lado ----- */
-@media (min-width: 768px) {
-  .brand__sub {
-    display: block;
-  }
-
-  .app-header__case {
-    order: 0;
-    width: auto;
-    margin-right: auto;
-    padding-left: var(--space-3);
-  }
-
-  .simulator {
-    display: grid;
-    grid-template-columns: 18rem 1fr;
-    align-items: start;
-    padding: var(--space-5);
-    gap: var(--space-5);
-  }
-
-  .vitals-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .chat-panel {
-    min-height: calc(100vh - var(--header-h) - (var(--space-5) * 2));
-  }
-}
-
-/* ----- Desktop: sidebar de navegação fixa + layout de 3 colunas ----- */
-@media (min-width: 1024px) {
-  .nav-toggle {
-    display: none;
-  }
-
-  .app-shell {
-    flex-direction: row;
-  }
-
-  .sidebar {
-    display: flex;
-    width: var(--sidebar-w);
-    flex-shrink: 0;
-    height: calc(100vh - var(--header-h));
-    position: sticky;
-    top: var(--header-h);
-  }
-
-  .simulator {
-    grid-template-columns: var(--clinical-panel-w) 1fr;
-    padding: var(--space-6);
-    gap: var(--space-6);
-  }
-
-  .card__title {
-    font-size: var(--fs-sm);
-  }
-}
-
-/* ----- Telas largas: um pouco mais de respiro ----- */
-@media (min-width: 1280px) {
-  .simulator {
-    max-width: 90rem;
-    margin: 0 auto;
-    width: 100%;
-  }
+.rodape {
+  height: var(--altura-rodape);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fonte-xs);
+  color: var(--cor-texto-fraco);
+  border-top: 1px solid var(--cor-borda);
+  flex-shrink: 0;
 }
