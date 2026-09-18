@@ -28,11 +28,14 @@
         </div>
       </div>
 
-      <div class="cabecalho__fim">
+      <div class="cronometro">
         <span class="cronometro" title="Tempo restante da simulação">
           <span class="cronometro__icone" aria-hidden="true">⏱</span>
           <span class="cronometro__valor">4:59</span>
         </span>
+      </div>
+
+      <div class="cabecalho__fim">
         <span class="selo selo--perigo">Instável</span>
       </div>
     </header>
@@ -46,46 +49,62 @@
         <article class="cartao">
           <h2 class="cartao__titulo">Sinais vitais</h2>
           <ul class="sinais-vitais">
-            <li class="sinal-vital">
+
+            <li class="sinal-vital" data-nome="Pressão Arterial" tabindex="0">
               <div class="sinal-vital__barra">
                 <span class="sinal-vital__barra-preenchimento sinal-vital__barra-preenchimento--alta"
-                      title="Em elevação" aria-label="Em elevação, acima do normal"></span>
+                      title="Em elevação"
+                      aria-label="Em elevação, acima do normal"></span>
               </div>
+
               <div class="sinal-vital__conteudo">
                 <span class="sinal-vital__rotulo">PA</span>
                 <span class="sinal-vital__valor">154/92 <small>mmHg</small></span>
               </div>
             </li>
-            <li class="sinal-vital">
+
+
+            <li class="sinal-vital" data-nome="Frequência Cardíaca" tabindex="0">
               <div class="sinal-vital__barra">
                 <span class="sinal-vital__barra-preenchimento sinal-vital__barra-preenchimento--alta"
-                      title="Em elevação" aria-label="Em elevação, acima do normal"></span>
+                      title="Em elevação"
+                      aria-label="Em elevação, acima do normal"></span>
               </div>
+
               <div class="sinal-vital__conteudo">
                 <span class="sinal-vital__rotulo">FC</span>
                 <span class="sinal-vital__valor">101 <small>bpm</small></span>
               </div>
             </li>
-            <li class="sinal-vital">
+
+
+            <li class="sinal-vital" data-nome="Frequência Respiratória" tabindex="0">
               <div class="sinal-vital__barra">
                 <span class="sinal-vital__barra-preenchimento sinal-vital__barra-preenchimento--alta"
-                      title="Em elevação" aria-label="Em elevação, acima do normal"></span>
+                      title="Em elevação"
+                      aria-label="Em elevação, acima do normal"></span>
               </div>
+
               <div class="sinal-vital__conteudo">
                 <span class="sinal-vital__rotulo">FR</span>
                 <span class="sinal-vital__valor">18 <small>irpm</small></span>
               </div>
             </li>
-            <li class="sinal-vital">
+
+
+            <li class="sinal-vital" data-nome="Saturação de Oxigênio" tabindex="0">
               <div class="sinal-vital__barra">
                 <span class="sinal-vital__barra-preenchimento sinal-vital__barra-preenchimento--baixa"
-                      title="Em queda" aria-label="Em queda, abaixo do normal"></span>
+                      title="Em queda"
+                      aria-label="Em queda, abaixo do normal"></span>
               </div>
+
               <div class="sinal-vital__conteudo">
                 <span class="sinal-vital__rotulo">SpO₂</span>
                 <span class="sinal-vital__valor">96<small>%</small></span>
               </div>
             </li>
+
           </ul>
         </article>
 
