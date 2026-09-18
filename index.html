@@ -9,9 +9,6 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
-  <a class="link-pular" href="#painel-conversa">Pular para a conversa com o paciente</a>
-
   <div class="aplicativo">
 
     <!-- ===================== CABEÇALHO ===================== -->
@@ -24,28 +21,28 @@
 
         <div class="cabecalho__caso">
           <h1 class="titulo-caso">Simulador — Dor Torácica</h1>
-          <p class="subtitulo-caso">Carlos Mendes (paciente simulado)</p>
+          <p class="subtitulo-caso">Paciente simulado</p>
         </div>
       </div>
 
       <div class="cabecalho__fim">
         <span class="cronometro" title="Tempo restante da simulação">
           <span class="cronometro__icone" aria-hidden="true">⏱</span>
-          <span class="cronometro__valor">4:59</span>
+          <span class="cronometro__valor">05:00</span>
         </span>
-        <span class="selo selo--perigo">Instável</span>
+        <span class="selo selo--perigo">Estavel</span>
       </div>
     </header>
 
     <!-- ===================== CONTEÚDO PRINCIPAL ===================== -->
     <main class="simulador" id="conteudo-principal">
 
-      <!-- Painel clínico: sinais vitais + sintomas -->
-      <section class="painel-clinico" aria-label="Estado clínico do paciente">
-
+      <!-- Sinais vitais -->
+      <section class="sinais-vitais">
         <article class="cartao">
           <h2 class="cartao__titulo">Sinais vitais</h2>
-          <ul class="sinais-vitais">
+          
+          <ul class="">
             <li class="sinal-vital">
               <div class="sinal-vital__barra">
                 <span class="sinal-vital__barra-preenchimento sinal-vital__barra-preenchimento--alta"
@@ -68,7 +65,7 @@
             </li>
             <li class="sinal-vital">
               <div class="sinal-vital__barra">
-                <span class="sinal-vital__barra-preenchimento sinal-vital__barra-preenchimento--alta"
+                <span class="sinal-vital__barra-preenchimento sinal-vital__barra-preenchimento--normal"
                       title="Em elevação" aria-label="Em elevação, acima do normal"></span>
               </div>
               <div class="sinal-vital__conteudo">
@@ -87,8 +84,33 @@
               </div>
             </li>
           </ul>
+          
         </article>
+      </section>
 
+        <!-- Conversa com o paciente -->
+      <section class="painel-conversa" id="painel-conversa" aria-label="Conversa com o paciente simulado">
+
+        <ol class="registro-conversa">
+          <li class="mensagem mensagem--ia">
+            <span class="mensagem__autor">IA</span>
+            <p class="mensagem__texto">Simulação iniciada. Tempo disponível: 5:00. Investigue e trate o paciente.</p>
+          </li>
+          <li class="mensagem mensagem--paciente">
+            <span class="mensagem__autor">Paciente</span>
+            <p class="mensagem__texto">Doutor(a), estou com uma dor forte no peito há umas duas horas... Estou suando frio e com medo.</p>
+          </li>
+        </ol>
+
+        <div class="entrada-conversa">
+          <label class="apenas-leitor-de-tela" for="campo-mensagem">Escreva uma pergunta, investigação ou conduta</label>
+          <input class="entrada-conversa__campo" id="campo-mensagem" type="text"
+                 placeholder="Pergunte, investigue ou indique conduta…">
+          <button class="botao botao--enviar" type="button" aria-label="Enviar mensagem">➤</button>
+        </div>
+      </section>
+      <!-- Painel sintomas -->
+      <section class="sintomas" aria-label="Estado clínico do paciente">
         <article class="cartao">
           <h2 class="cartao__titulo">Sintomas <span class="cartao__titulo-contagem">(2)</span></h2>
           <ul class="lista-sintomas">
@@ -106,32 +128,24 @@
               </div>
               <div class="sintoma__barra"><span style="width: 65%;"></span></div>
             </li>
+            <li class="sintoma sintoma--medio">
+              <div class="sintoma__linha">
+                <span class="sintoma__nome">Sudorese fria</span>
+                <span class="sintoma__pontuacao">6.5/10</span>
+              </div>
+              <div class="sintoma__barra"><span style="width: 65%;"></span></div>
+            </li>
+            <li class="sintoma sintoma--medio">
+              <div class="sintoma__linha">
+                <span class="sintoma__nome">Sudorese fria</span>
+                <span class="sintoma__pontuacao">6.5/10</span>
+              </div>
+              <div class="sintoma__barra"><span style="width: 65%;"></span></div>
+            </li>
           </ul>
 
           <button class="botao botao--suave botao--bloco" type="button">Protocolos</button>
         </article>
-      </section>
-
-      <!-- Conversa com o paciente -->
-      <section class="painel-conversa" id="painel-conversa" aria-label="Conversa com o paciente simulado">
-
-        <ol class="registro-conversa">
-          <li class="mensagem mensagem--ia">
-            <span class="mensagem__autor">IA</span>
-            <p class="mensagem__texto">Simulação iniciada. Tempo disponível: 5:00. Investigue e trate o paciente — o quadro evolui se você demorar.</p>
-          </li>
-          <li class="mensagem mensagem--paciente">
-            <span class="mensagem__autor">Paciente</span>
-            <p class="mensagem__texto">Doutor(a), estou com uma dor forte no peito há umas duas horas... Estou suando frio e com medo.</p>
-          </li>
-        </ol>
-
-        <div class="entrada-conversa">
-          <label class="apenas-leitor-de-tela" for="campo-mensagem">Escreva uma pergunta, investigação ou conduta</label>
-          <input class="entrada-conversa__campo" id="campo-mensagem" type="text"
-                 placeholder="Pergunte, investigue ou indique conduta…">
-          <button class="botao botao--enviar" type="button" aria-label="Enviar mensagem">➤</button>
-        </div>
       </section>
 
     </main>

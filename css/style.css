@@ -1,11 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
 
 /* =======================================================================
    LXP MOINHOS · SIMULADOR CLÍNICO
-   Front-End Design — Sprint 3 (MVP Visual, mockado)
-   Tema: claro · Foco atual: desktop, sem rolagem (uma tela só)
-   CSS puro — Flexbox + Grid, sem frameworks
-   Nomenclatura padronizada em português (variáveis, classes e ids)
    ======================================================================= */
 
 /* ---------- 1. VARIÁVEIS GLOBAIS (TOKENS DE DESIGN) ---------- */
@@ -53,7 +50,7 @@
   --fonte-lg: 1rem;
   --fonte-xl: 1.125rem;
 
-  /* Espaçamentos (compactos, para caber em uma tela) */
+  /* Espaçamentos */
   --espaco-1: 0.25rem;
   --espaco-2: 0.5rem;
   --espaco-3: 0.75rem;
@@ -64,7 +61,7 @@
   /* Layout */
   --altura-cabecalho: 3.25rem;
   --altura-rodape: 2.25rem;
-  --largura-painel-clinico: 30rem;
+  --largura-painel-clinico: 30%;
   --raio-sm: 0.5rem;
   --raio-md: 0.75rem;
   --raio-lg: 1rem;
@@ -266,30 +263,29 @@ input:focus-visible {
 .simulador {
   flex: 1;
   display: grid;
-  grid-template-columns: var(--largura-painel-clinico) 1fr;
+  grid-template-columns: var(--largura-painel-clinico) 1fr var(--largura-painel-clinico);
   align-items: start;
-  gap: 2.5rem;
+  gap: 2rem;
   padding-top: 1rem;
-  padding-left: 10rem;
-  max-width: 105rem;
-  /* width: 100%; */
-  margin: 0;
-  min-height: 0;
+  padding-left: 1.5rem;
+  padding-right: 5rem;
+  max-width: 105rem;  
 }
 
-/* Painel clínico (sinais vitais + sintomas) */
-.painel-clinico {
+/* Painel clínico (Sidebar) */
+.sintomas {
   display: flex;
   flex-direction: column;
-  gap: var(--espaco-3);
+  gap: var(--espaco-1);
   min-width: 0;
   
 }
 
 .cartao {
+ 
   background: var(--cor-superficie);
   border: 1px solid var(--cor-borda);
-  border-radius: var(--raio-md);
+  border-radius: var(--raio-sm);
   padding: var(--espaco-2) var(--espaco-3);
   box-shadow: var(--sombra-cartao);
   
@@ -311,11 +307,12 @@ input:focus-visible {
   font-weight: 400;
 }
 
-/* ----- Sinais vitais: retângulo horizontal segmentado ----- */
+/* ----- Sinais vitais ----- */
 .sinais-vitais {
-  display: flex;
-  flex-direction: row;
-  background: var(--cor-superficie-alt);
+  display: grid;
+  max-width: 100%;
+  gap: var(--espaco-6);
+  background: var(--cor-superficie-al);
   border: 1px solid var(--cor-borda);
   border-radius: var(--raio-sm);
   overflow: hidden;
@@ -327,8 +324,8 @@ input:focus-visible {
   min-height: 4.75rem;
   display: flex;
   align-items: stretch;
-  gap: var(--espaco-4);
-  padding: var(--espaco-3) var(--espaco-2) var(--espaco-3) var(--espaco-2);
+  gap: var(--espaco-3);
+  padding: var(--espaco-5) var(--espaco-4) var(--espaco-5) var(--espaco-4);
   border-left: 1px solid var(--cor-borda);
 }
 
@@ -365,12 +362,7 @@ input:focus-visible {
   color: var(--cor-texto-suave);
 }
 
-/* Barra indicadora vertical: funciona como um nível que enche de baixo
-   para cima. Quanto maior o preenchimento, maior o valor do sinal. Uma
-   marca central indica a faixa de referência "normal"; preenchimento até
-   essa marca = verde (normal); ultrapassando a marca para cima = vermelho
-   (acima do normal); preenchimento bem abaixo da marca = azul (abaixo do
-   normal). */
+/* Barra indicadora sinais vitais*/
 .sinal-vital__barra {
   position: relative;
   width: 5px;
@@ -415,7 +407,7 @@ input:focus-visible {
   background: var(--cor-baixa);
 }
 
-/* ----- Sintomas (mantido como estava — apenas nomenclatura em português) ----- */
+/* ----- Sintomas ----- */
 .lista-sintomas {
   display: flex;
   flex-direction: column;
@@ -424,8 +416,9 @@ input:focus-visible {
 }
 
 .sintoma {
-  padding: var(--espaco-2) var(--espaco-3);
+  padding: var(--espaco-2) var(--espaco-3); 
   border-radius: var(--raio-sm);
+  
 }
 
 .sintoma__linha {
@@ -538,6 +531,7 @@ input:focus-visible {
 .registro-conversa {
   flex: 1;
   display: flex;
+  justify-content: flex-end;
   flex-direction: column;
   gap: var(--espaco-3);
   overflow-y: auto;
