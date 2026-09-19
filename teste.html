@@ -1,176 +1,197 @@
 <!DOCTYPE html>
 <html lang="pt-BR" class="h-full">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simulador Clínico — LXP Moinhos</title>
-  <meta name="description" content="Simulador de casos clínicos com paciente virtual e IA — LXP Moinhos, Hospital Moinhos de Vento.">
-  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador Clínico — LXP Moinhos</title>
+    <meta name="description"
+        content="Simulador de casos clínicos com paciente virtual e IA — LXP Moinhos, Hospital Moinhos de Vento.">
+    <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body class="flex min-h-screen flex-col bg-white font-sans text-[0.875rem] leading-[1.45] text-texto">
 
-  <div class="flex min-h-screen flex-1 flex-col">
+    <div class="flex min-h-screen flex-1 flex-col">
 
-    <!-- ===================== CABEÇALHO ===================== -->
-    <header class="flex h-cabecalho flex-shrink-0 items-center justify-between gap-4 bg-gradient-to-b from-marinho-700 to-marinho-800 px-5 text-white">
-      <div class="flex min-w-0 items-center gap-4">
-        <a class="flex flex-shrink-0 items-center gap-2" href="index.html">
-          <span class="flex h-[1.875rem] w-[1.875rem] flex-shrink-0 items-center justify-center rounded-lg bg-destaque text-xs font-bold text-white" aria-hidden="true">HM</span>
-          <span class="whitespace-nowrap text-sm font-bold">LXP Moinhos</span>
-        </a>
+        <!-- ===================== CABEÇALHO ===================== -->
+        <header
+            class="flex h-cabecalho flex-shrink-0 items-center justify-between gap-4 bg-gradient-to-b from-marinho-700 to-marinho-800 px-5 text-white">
+            <div class="flex min-w-0 items-center gap-4">
+                <a class="flex flex-shrink-0 items-center gap-2" href="index.html">
+                    <span
+                        class="flex h-[1.875rem] w-[1.875rem] flex-shrink-0 items-center justify-center rounded-lg bg-destaque text-xs font-bold text-white"
+                        aria-hidden="true">HM</span>
+                    <span class="whitespace-nowrap text-sm font-bold">LXP Moinhos</span>
+                </a>
 
-        <div class="flex min-w-0 flex-col justify-center border-l border-white/20 pl-4 leading-tight">
-          <h1 class="truncate text-base font-bold">Simulador — Dor Torácica</h1>
-          <p class="text-xs text-white/65">Paciente simulado</p>
-        </div>
-      </div>
+                <div class="flex min-w-0 flex-col justify-center border-l border-white/20 pl-4 leading-tight">
+                    <h1 class="truncate text-base font-bold">Simulador — Dor Torácica</h1>
+                    <p class="text-xs text-white/65">Paciente simulado</p>
+                </div>
+            </div>
 
-      <div class="flex flex-shrink-0 items-center gap-4">
-        <span class="inline-flex items-center gap-1 text-sm font-semibold tabular-nums" title="Tempo restante da simulação">
-          <span aria-hidden="true">⏱</span>
-          <span>05:00</span>
-        </span>
-        <span class="inline-flex items-center rounded-full bg-white/15 px-3 py-1 text-xs font-bold uppercase tracking-wide text-red-100">Estável</span>
-      </div>
-    </header>
-
-    <!-- ===================== CONTEÚDO PRINCIPAL ===================== -->
-    <main id="conteudo-principal"
-          class="mx-auto grid w-full max-w-[105rem] flex-1 grid-cols-[30%_1fr_30%] items-start gap-8 py-4 pr-20 pl-6">
-
-      <!-- Sinais vitais: grid 2×2 -->
-      <section aria-label="Sinais vitais do paciente">
-        <article class="rounded-lg border border-borda bg-white p-3 shadow-[0_4px_14px_rgba(31,58,95,0.08)]">
-          <h2 class="mb-3 text-xs font-bold tracking-wide text-texto-suave uppercase">Sinais vitais</h2>
-
-          <ul class="grid grid-cols-2 gap-3">
-            <!-- PA — em elevação -->
-            <li class="flex min-h-[5.5rem] items-stretch gap-3 rounded-md border border-borda bg-superficie-alt p-3">
-              <div class="relative w-[5px] flex-shrink-0 self-stretch rounded-full bg-black/[0.08] before:absolute before:inset-x-[-2px] before:top-1/2 before:h-px before:-translate-y-1/2 before:bg-black/[0.18] before:content-['']">
-                <span class="absolute inset-x-0 bottom-0 h-[85%] rounded-full bg-alta"
-                      title="Em elevação" aria-label="Em elevação, acima do normal"></span>
-              </div>
-              <div class="flex min-w-0 flex-col justify-center gap-px">
-                <span class="text-xs text-texto-suave">PA</span>
-                <span class="text-[0.9375rem] leading-tight font-bold whitespace-nowrap text-texto">
-                  154/92 <small class="block text-[0.625rem] font-normal text-texto-suave">mmHg</small>
+            <div class="flex flex-shrink-0 items-center gap-4">
+                <span class="inline-flex items-center gap-1 text-sm font-semibold tabular-nums"
+                    title="Tempo restante da simulação">
+                    <span aria-hidden="true">⏱</span>
+                    <span>05:00</span>
                 </span>
-              </div>
-            </li>
+                <span
+                    class="inline-flex items-center rounded-full bg-white/15 px-3 py-1 text-xs font-bold uppercase tracking-wide text-red-100">Estável</span>
+            </div>
+        </header>
 
-            <!-- FC — em elevação -->
-            <li class="flex min-h-[5.5rem] items-stretch gap-3 rounded-md border border-borda bg-superficie-alt p-3">
-              <div class="relative w-[5px] flex-shrink-0 self-stretch rounded-full bg-black/[0.08] before:absolute before:inset-x-[-2px] before:top-1/2 before:h-px before:-translate-y-1/2 before:bg-black/[0.18] before:content-['']">
-                <span class="absolute inset-x-0 bottom-0 h-[85%] rounded-full bg-alta"
-                      title="Em elevação" aria-label="Em elevação, acima do normal"></span>
-              </div>
-              <div class="flex min-w-0 flex-col justify-center gap-px">
-                <span class="text-xs text-texto-suave">FC</span>
-                <span class="text-[0.9375rem] leading-tight font-bold whitespace-nowrap text-texto">
-                  101 <small class="block text-[0.625rem] font-normal text-texto-suave">bpm</small>
-                </span>
-              </div>
-            </li>
+        <!-- ===================== CONTEÚDO PRINCIPAL ===================== -->
+        <main id="conteudo-principal"
+            class="mx-auto grid w-full max-w-[105rem] flex-1 grid-cols-[30%_1fr_30%] items-start gap-8 py-4 pr-20 pl-6">
 
-            <!-- FR — dentro do normal -->
-            <li class="flex min-h-[5.5rem] items-stretch gap-3 rounded-md border border-borda bg-superficie-alt p-3">
-              <div class="relative w-[5px] flex-shrink-0 self-stretch rounded-full bg-black/[0.08] before:absolute before:inset-x-[-2px] before:top-1/2 before:h-px before:-translate-y-1/2 before:bg-black/[0.18] before:content-['']">
-                <span class="absolute inset-x-0 bottom-0 h-1/2 rounded-full bg-normal"
-                      title="Dentro do normal" aria-label="Dentro do normal"></span>
-              </div>
-              <div class="flex min-w-0 flex-col justify-center gap-px">
-                <span class="text-xs text-texto-suave">FR</span>
-                <span class="text-[0.9375rem] leading-tight font-bold whitespace-nowrap text-texto">
-                  18 <small class="block text-[0.625rem] font-normal text-texto-suave">irpm</small>
-                </span>
-              </div>
-            </li>
+            <!-- Sinais vitais: grid 2×2 -->
+            <section aria-label="Sinais vitais do paciente">
+                <article class="rounded-lg border border-borda bg-white p-3 shadow-[0_4px_14px_rgba(31,58,95,0.08)]">
+                    <h2 class="mb-3 text-xs font-bold tracking-wide text-texto-suave uppercase">Sinais vitais</h2>
 
-            <!-- SpO2 — em queda -->
-            <li class="flex min-h-[5.5rem] items-stretch gap-3 rounded-md border border-borda bg-superficie-alt p-3">
-              <div class="relative w-[5px] flex-shrink-0 self-stretch rounded-full bg-black/[0.08] before:absolute before:inset-x-[-2px] before:top-1/2 before:h-px before:-translate-y-1/2 before:bg-black/[0.18] before:content-['']">
-                <span class="absolute inset-x-0 bottom-0 h-1/5 rounded-full bg-baixa"
-                      title="Em queda" aria-label="Em queda, abaixo do normal"></span>
-              </div>
-              <div class="flex min-w-0 flex-col justify-center gap-px">
-                <span class="text-xs text-texto-suave">SpO₂</span>
-                <span class="text-[0.9375rem] leading-tight font-bold whitespace-nowrap text-texto">
-                  96<small class="block text-[0.625rem] font-normal text-texto-suave">%</small>
-                </span>
-              </div>
-            </li>
-          </ul>
-        </article>
-      </section>
+                    <ul class="grid grid-cols-2 gap-3">
+                        <!-- PA — em elevação -->
+                        <li
+                            class="flex min-h-[5.5rem] items-stretch gap-3 rounded-md border border-borda bg-superficie-alt p-3">
+                            <div
+                                class="relative w-[5px] flex-shrink-0 self-stretch rounded-full bg-black/[0.08] before:absolute before:inset-x-[-2px] before:top-1/2 before:h-px before:-translate-y-1/2 before:bg-black/[0.18] before:content-['']">
+                                <span class="absolute inset-x-0 bottom-0 h-[85%] rounded-full bg-alta"
+                                    title="Em elevação" aria-label="Em elevação, acima do normal"></span>
+                            </div>
+                            <div class="flex min-w-0 flex-col justify-center gap-px">
+                                <span class="text-xs text-texto-suave">PA</span>
+                                <span class="text-[0.9375rem] leading-tight font-bold whitespace-nowrap text-texto">
+                                    154/92 <small
+                                        class="block text-[0.625rem] font-normal text-texto-suave">mmHg</small>
+                                </span>
+                            </div>
+                        </li>
 
-      <!-- Conversa com o paciente -->
-      <section id="painel-conversa" aria-label="Conversa com o paciente simulado"
-               class="flex h-[calc(100vh-var(--spacing-cabecalho)-var(--spacing-rodape)-2rem)] flex-col gap-3 rounded-md border border-borda bg-white p-5 shadow-[0_4px_14px_rgba(31,58,95,0.08)]">
+                        <!-- FC — em elevação -->
+                        <li
+                            class="flex min-h-[5.5rem] items-stretch gap-3 rounded-md border border-borda bg-superficie-alt p-3">
+                            <div
+                                class="relative w-[5px] flex-shrink-0 self-stretch rounded-full bg-black/[0.08] before:absolute before:inset-x-[-2px] before:top-1/2 before:h-px before:-translate-y-1/2 before:bg-black/[0.18] before:content-['']">
+                                <span class="absolute inset-x-0 bottom-0 h-[85%] rounded-full bg-alta"
+                                    title="Em elevação" aria-label="Em elevação, acima do normal"></span>
+                            </div>
+                            <div class="flex min-w-0 flex-col justify-center gap-px">
+                                <span class="text-xs text-texto-suave">FC</span>
+                                <span class="text-[0.9375rem] leading-tight font-bold whitespace-nowrap text-texto">
+                                    101 <small class="block text-[0.625rem] font-normal text-texto-suave">bpm</small>
+                                </span>
+                            </div>
+                        </li>
 
-        <ol class="flex flex-1 flex-col justify-end gap-3 overflow-y-auto">
-          <li class="max-w-[34rem] rounded-md bg-superficie-alt p-3">
-            <span class="mb-1 block text-xs font-bold tracking-wide text-texto-fraco uppercase">IA</span>
-            <p class="text-sm text-texto">Simulação iniciada. Tempo disponível: 5:00. Investigue e trate o paciente.</p>
-          </li>
-          <li class="max-w-[34rem] rounded-md bg-primaria-suave p-3">
-            <span class="mb-1 block text-xs font-bold tracking-wide text-primaria uppercase">Paciente</span>
-            <p class="text-sm text-texto">Doutor(a), estou com uma dor forte no peito há umas duas horas... Estou suando frio e com medo.</p>
-          </li>
-        </ol>
+                        <!-- FR — dentro do normal -->
+                        <li
+                            class="flex min-h-[5.5rem] items-stretch gap-3 rounded-md border border-borda bg-superficie-alt p-3">
+                            <div
+                                class="relative w-[5px] flex-shrink-0 self-stretch rounded-full bg-black/[0.08] before:absolute before:inset-x-[-2px] before:top-1/2 before:h-px before:-translate-y-1/2 before:bg-black/[0.18] before:content-['']">
+                                <span class="absolute inset-x-0 bottom-0 h-1/2 rounded-full bg-normal"
+                                    title="Dentro do normal" aria-label="Dentro do normal"></span>
+                            </div>
+                            <div class="flex min-w-0 flex-col justify-center gap-px">
+                                <span class="text-xs text-texto-suave">FR</span>
+                                <span class="text-[0.9375rem] leading-tight font-bold whitespace-nowrap text-texto">
+                                    18 <small class="block text-[0.625rem] font-normal text-texto-suave">irpm</small>
+                                </span>
+                            </div>
+                        </li>
 
-        <div class="flex items-center gap-2 border-t border-borda pt-3">
-          <label class="sr-only" for="campo-mensagem">Escreva uma pergunta, investigação ou conduta</label>
-          <input id="campo-mensagem" type="text"
-                 class="min-w-0 flex-1 rounded-md border border-borda bg-superficie-alt px-3 py-2 text-sm text-texto placeholder:text-texto-fraco focus-visible:border-destaque focus-visible:outline-none"
-                 placeholder="Pergunte, investigue ou indique conduta…">
-          <button type="button" aria-label="Enviar mensagem"
-                  class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-destaque text-white transition-colors hover:bg-destaque-escuro focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque">➤</button>
-        </div>
-      </section>
+                        <!-- SpO2 — em queda -->
+                        <li
+                            class="flex min-h-[5.5rem] items-stretch gap-3 rounded-md border border-borda bg-superficie-alt p-3">
+                            <div
+                                class="relative w-[5px] flex-shrink-0 self-stretch rounded-full bg-black/[0.08] before:absolute before:inset-x-[-2px] before:top-1/2 before:h-px before:-translate-y-1/2 before:bg-black/[0.18] before:content-['']">
+                                <span class="absolute inset-x-0 bottom-0 h-1/5 rounded-full bg-baixa" title="Em queda"
+                                    aria-label="Em queda, abaixo do normal"></span>
+                            </div>
+                            <div class="flex min-w-0 flex-col justify-center gap-px">
+                                <span class="text-xs text-texto-suave">SpO₂</span>
+                                <span class="text-[0.9375rem] leading-tight font-bold whitespace-nowrap text-texto">
+                                    96<small class="block text-[0.625rem] font-normal text-texto-suave">%</small>
+                                </span>
+                            </div>
+                        </li>
+                    </ul>
+                </article>
+            </section>
 
-      <!-- Sintomas: barras horizontais -->
-      <section aria-label="Sintomas do paciente" class="min-w-0">
-        <article class="rounded-lg border border-borda bg-white p-3 shadow-[0_4px_14px_rgba(31,58,95,0.08)]">
-          <h2 class="mb-3 text-xs font-bold tracking-wide text-texto-suave uppercase">
-            Sintomas <span class="font-normal tracking-normal text-texto-fraco normal-case">(2)</span>
-          </h2>
+            <!-- Conversa com o paciente -->
+            <section id="painel-conversa" aria-label="Conversa com o paciente simulado"
+                class="flex h-[calc(100vh-var(--spacing-cabecalho)-var(--spacing-rodape)-2rem)] flex-col gap-3 rounded-md border border-borda bg-white p-5 shadow-[0_4px_14px_rgba(31,58,95,0.08)]">
 
-          <ul class="mb-3 flex flex-col gap-2">
-            <li class="rounded-md bg-perigo/10 p-3">
-              <div class="mb-2 flex items-baseline justify-between text-sm font-semibold">
-                <span class="text-perigo">Dor torácica</span>
-                <span class="text-perigo">8.0/10</span>
-              </div>
-              <div class="h-2 overflow-hidden rounded-full bg-black/[0.08]">
-                <span class="block h-full w-[80%] rounded-full bg-perigo"></span>
-              </div>
-            </li>
-            <li class="rounded-md bg-alerta/10 p-3">
-              <div class="mb-2 flex items-baseline justify-between text-sm font-semibold">
-                <span class="text-alerta">Sudorese fria</span>
-                <span class="text-alerta">6.5/10</span>
-              </div>
-              <div class="h-2 overflow-hidden rounded-full bg-black/[0.08]">
-                <span class="block h-full w-[65%] rounded-full bg-alerta"></span>
-              </div>
-            </li>
-          </ul>
+                <ol class="flex flex-1 flex-col justify-end gap-3 overflow-y-auto">
+                    <li class="max-w-[34rem] rounded-md bg-superficie-alt p-3">
+                        <span class="mb-1 block text-xs font-bold tracking-wide text-texto-fraco uppercase">IA</span>
+                        <p class="text-sm text-texto">Simulação iniciada. Tempo disponível: 5:00. Investigue e trate o
+                            paciente.</p>
+                    </li>
+                    <li class="max-w-[34rem] rounded-md bg-primaria-suave p-3">
+                        <span class="mb-1 block text-xs font-bold tracking-wide text-primaria uppercase">Paciente</span>
+                        <p class="text-sm text-texto">Doutor(a), estou com uma dor forte no peito há umas duas horas...
+                            Estou suando frio e com medo.</p>
+                    </li>
+                </ol>
 
-          <button type="button"
-                  class="w-full rounded-md bg-primaria-suave px-4 py-2 text-sm font-semibold text-primaria transition-colors hover:bg-[#d9eaff] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque">
-            Protocolos
-          </button>
-        </article>
-      </section>
+                <div class="flex items-center gap-2 border-t border-borda pt-3">
+                    <label class="sr-only" for="campo-mensagem">Escreva uma pergunta, investigação ou conduta</label>
+                    <input id="campo-mensagem" type="text"
+                        class="min-w-0 flex-1 rounded-md border border-borda bg-superficie-alt px-3 py-2 text-sm text-texto placeholder:text-texto-fraco focus-visible:border-destaque focus-visible:outline-none"
+                        placeholder="Pergunte, investigue ou indique conduta…">
+                    <button type="button" aria-label="Enviar mensagem"
+                        class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-destaque text-white transition-colors hover:bg-destaque-escuro focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque">➤</button>
+                </div>
+            </section>
 
-    </main>
+            <!-- Sintomas: barras horizontais -->
+            <section aria-label="Sintomas do paciente" class="min-w-0">
+                <article class="rounded-lg border border-borda bg-white p-3 shadow-[0_4px_14px_rgba(31,58,95,0.08)]">
+                    <h2 class="mb-3 text-xs font-bold tracking-wide text-texto-suave uppercase">
+                        Sintomas <span class="font-normal tracking-normal text-texto-fraco normal-case">(2)</span>
+                    </h2>
 
-    <!-- ===================== RODAPÉ ===================== -->
-    <footer class="flex h-rodape flex-shrink-0 items-center justify-center border-t border-borda text-xs text-texto-fraco">
-      <p>FIAP · Engenharia de Software · Challenge Hospital Moinhos de Vento · Sprint 3</p>
-    </footer>
-  </div>
+                    <ul class="mb-3 flex flex-col gap-2">
+                        <li class="rounded-md bg-perigo/10 p-3">
+                            <div class="mb-2 flex items-baseline justify-between text-sm font-semibold">
+                                <span class="text-perigo">Dor torácica</span>
+                                <span class="text-perigo">8.0/10</span>
+                            </div>
+                            <div class="h-2 overflow-hidden rounded-full bg-black/[0.08]">
+                                <span class="block h-full w-[80%] rounded-full bg-perigo"></span>
+                            </div>
+                        </li>
+                        <li class="rounded-md bg-alerta/10 p-3">
+                            <div class="mb-2 flex items-baseline justify-between text-sm font-semibold">
+                                <span class="text-alerta">Sudorese fria</span>
+                                <span class="text-alerta">6.5/10</span>
+                            </div>
+                            <div class="h-2 overflow-hidden rounded-full bg-black/[0.08]">
+                                <span class="block h-full w-[65%] rounded-full bg-alerta"></span>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <button type="button"
+                        class="w-full rounded-md bg-primaria-suave px-4 py-2 text-sm font-semibold text-primaria transition-colors hover:bg-[#d9eaff] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque">
+                        Protocolos
+                    </button>
+                </article>
+            </section>
+
+        </main>
+
+        <!-- ===================== RODAPÉ ===================== -->
+        <footer
+            class="flex h-rodape flex-shrink-0 items-center justify-center border-t border-borda text-xs text-texto-fraco">
+            <p>FIAP · Engenharia de Software · Challenge Hospital Moinhos de Vento · Sprint 3</p>
+        </footer>
+    </div>
 
 </body>
+
 </html>
