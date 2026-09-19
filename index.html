@@ -1,147 +1,249 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simulador Clínico — LXP Moinhos</title>
-  <meta name="description" content="Simulador de casos clínicos com paciente virtual e IA — LXP Moinhos, Hospital Moinhos de Vento.">
-  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simulador Clínico — LXP Moinhos</title>
+    <meta
+      name="description"
+      content="Simulador de casos clínicos com paciente virtual e IA — LXP Moinhos, Hospital Moinhos de Vento."
+    />
+    <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <a class="link-pular" href="#painel-conversa"
+      >Pular para a conversa com o paciente</a
+    >
 
-  <a class="link-pular" href="#painel-conversa">Pular para a conversa com o paciente</a>
+    <div class="aplicativo">
+      <!-- ===================== CABEÇALHO ===================== -->
+      <header class="cabecalho">
+        <div class="cabecalho__inicio">
+          <a class="marca" href="index.html">
+            <span class="marca__selo" aria-hidden="true">HM</span>
+            <span class="marca__nome">LXP Moinhos</span>
+          </a>
 
-  <div class="aplicativo">
-
-    <!-- ===================== CABEÇALHO ===================== -->
-    <header class="cabecalho">
-      <div class="cabecalho__inicio">
-        <a class="marca" href="index.html">
-          <span class="marca__selo" aria-hidden="true">HM</span>
-          <span class="marca__nome">LXP Moinhos</span>
-        </a>
-
-        <div class="cabecalho__caso">
-          <h1 class="titulo-caso">Simulador — Dor Torácica</h1>
-          <p class="subtitulo-caso">Carlos Mendes (paciente simulado)</p>
+          <div class="cabecalho__caso">
+            <h1 class="titulo-caso">Simulador — Dor Torácica</h1>
+            <p class="subtitulo-caso">Carlos Mendes (paciente simulado)</p>
+          </div>
         </div>
+
+        <div class="cabecalho__fim">
+            <span class="cronometro" title="Tempo restante da simulação" aria-live="off">
+              <span class="cronometro__icone" aria-hidden="true">⏱</span>
+              <time class="cronometro__valor" id="cronometro-valor" datetime="PT5M">5:00</time>
+          </span>
+          <span class="selo selo--perigo">Instável</span>
+        </div>
+      </header>
+
+      <!-- ===================== CONTEÚDO PRINCIPAL ===================== -->
+      <main class="simulador" id="conteudo-principal">
+        <!-- Painel clínico: sinais vitais + sintomas -->
+        <section class="painel-clinico" aria-label="Estado clínico do paciente">
+          <article class="cartao">
+            <h2 class="cartao__titulo">Sinais vitais</h2>
+            <ul class="sinais-vitais">
+              <li class="sinal-vital">
+                <div class="sinal-vital__barra">
+                  <span
+                    class="sinal-vital__barra-preenchimento sinal-vital__barra-preenchimento--alta"
+                    data-sinal-barra="pa"
+                    title="Em elevação"
+                    aria-label="Em elevação, acima do normal"
+                  ></span>
+                </div>
+                <div class="sinal-vital__conteudo">
+                  <span class="sinal-vital__rotulo">PA</span>
+                  <span class="sinal-vital__valor" data-sinal-valor="pa"
+                    >154/92 <small>mmHg</small></span
+                  >
+                </div>
+              </li>
+              <li class="sinal-vital">
+                <div class="sinal-vital__barra">
+                  <span
+                    class="sinal-vital__barra-preenchimento sinal-vital__barra-preenchimento--alta"
+                    data-sinal-barra="fc"
+                    title="Em elevação"
+                    aria-label="Em elevação, acima do normal"
+                  ></span>
+                </div>
+                <div class="sinal-vital__conteudo">
+                  <span class="sinal-vital__rotulo">FC</span>
+                  <span class="sinal-vital__valor" data-sinal-valor="fc">101 <small>bpm</small></span>
+                </div>
+              </li>
+              <li class="sinal-vital">
+                <div class="sinal-vital__barra">
+                  <span
+                    class="sinal-vital__barra-preenchimento sinal-vital__barra-preenchimento--alta"
+                    data-sinal-barra="fr"
+                    title="Em elevação"
+                    aria-label="Em elevação, acima do normal"
+                  ></span>
+                </div>
+                <div class="sinal-vital__conteudo">
+                  <span class="sinal-vital__rotulo">FR</span>
+                  <span class="sinal-vital__valor" data-sinal-valor="fr">18 <small>irpm</small></span>
+                </div>
+              </li>
+              <li class="sinal-vital">
+                <div class="sinal-vital__barra">
+                  <span
+                    class="sinal-vital__barra-preenchimento sinal-vital__barra-preenchimento--baixa"
+                    data-sinal-barra="spo2"
+                    title="Em queda"
+                    aria-label="Em queda, abaixo do normal"
+                  ></span>
+                </div>
+                <div class="sinal-vital__conteudo">
+                  <span class="sinal-vital__rotulo">SpO₂</span>
+                  <span class="sinal-vital__valor" data-sinal-valor="spo2">96<small>%</small></span>
+                </div>
+              </li>
+            </ul>
+          </article>
+
+          <article class="cartao cartao--sintomas">
+            <div class="sintomas__cabecalho">
+              <h2 class="cartao__titulo">
+                Monitor de sintomas <span class="cartao__titulo-contagem">(3)</span>
+              </h2>
+              <span class="sintomas__prioridade">Prioridade 1</span>
+            </div>
+            <div class="resumo-gravidade">
+              <div class="resumo-gravidade__linha">
+                <span>Gravidade atual</span>
+                <strong data-gravidade-atual>Grave</strong>
+              </div>
+              <div class="resumo-gravidade__escala" aria-label="Escala de gravidade: grave">
+                <span class="resumo-gravidade__nivel resumo-gravidade__nivel--baixo"></span>
+                <span class="resumo-gravidade__nivel resumo-gravidade__nivel--medio"></span>
+                <span class="resumo-gravidade__nivel resumo-gravidade__nivel--alto"></span>
+              </div>
+              <div class="resumo-gravidade__legenda"><span>Baixa</span><span>Moderada</span><span>Grave</span></div>
+            </div>
+            <ul class="lista-sintomas">
+              <li class="sintoma sintoma--alto" data-sintoma="dor">
+                <div class="sintoma__linha">
+                  <span class="sintoma__nome">Dor torácica</span>
+                  <span class="sintoma__gravidade" data-sintoma-gravidade>Grave</span>
+                </div>
+                <p class="sintoma__descricao" data-sintoma-descricao>Opressiva, com irradiação para o braço esquerdo.</p>
+                <div class="sintoma__medida"><span>Intensidade</span><span data-sintoma-medida>8.0/10</span></div>
+                <div class="sintoma__barra">
+                  <span data-sintoma-barra style="width: 80%"></span>
+                </div>
+              </li>
+              <li class="sintoma sintoma--medio" data-sintoma="sudorese">
+                <div class="sintoma__linha">
+                  <span class="sintoma__nome">Sudorese fria</span>
+                  <span class="sintoma__gravidade" data-sintoma-gravidade>Moderado</span>
+                </div>
+                <p class="sintoma__descricao" data-sintoma-descricao>Associada à palidez e sensação de mal-estar.</p>
+                <div class="sintoma__medida"><span>Intensidade</span><span data-sintoma-medida>6.5/10</span></div>
+                <div class="sintoma__barra">
+                  <span data-sintoma-barra style="width: 65%"></span>
+                </div>
+              </li>
+              <li class="sintoma sintoma--baixo" data-sintoma="dispneia">
+                <div class="sintoma__linha">
+                  <span class="sintoma__nome">Falta de ar</span>
+                  <span class="sintoma__gravidade" data-sintoma-gravidade>Baixa</span>
+                </div>
+                <p class="sintoma__descricao" data-sintoma-descricao>Sem esforço respiratório importante no momento.</p>
+                <div class="sintoma__medida"><span>Intensidade</span><span data-sintoma-medida>3.0/10</span></div>
+                <div class="sintoma__barra">
+                  <span data-sintoma-barra style="width: 30%"></span>
+                </div>
+              </li>
+            </ul>
+
+            <button class="botao botao--suave botao--bloco" type="button" data-abrir-protocolos>
+              Protocolos
+            </button>
+          </article>
+        </section>
+
+        <!-- Conversa com o paciente -->
+        <section
+          class="painel-conversa"
+          id="painel-conversa"
+          aria-label="Conversa com o paciente simulado"
+        >
+          <ol
+            class="registro-conversa"
+            aria-live="polite"
+            aria-label="Histórico da conversa"
+          ></ol>
+
+          <div class="entrada-conversa">
+            <label class="apenas-leitor-de-tela" for="campo-mensagem"
+              >Escreva uma pergunta, investigação ou conduta</label
+            >
+            <button class="botao botao--protocolos" type="button" data-abrir-protocolos>
+              Protocolos
+            </button>
+            <input
+              class="entrada-conversa__campo"
+              id="campo-mensagem"
+              type="text"
+              placeholder="Pergunte, investigue ou indique conduta…"
+            />
+            <button
+              class="botao botao--enviar"
+              type="button"
+              aria-label="Enviar mensagem"
+            >
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="m21 3-9 18-2.5-7.5L3 11l18-8Z M9.5 13.5 15 9"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                ></path>
+              </svg>
+            </button>
+          </div>
+        </section>
+      </main>
+
+      <div class="modal" id="modal-protocolos" aria-hidden="true">
+        <div class="modal__fundo" data-fechar-protocolos></div>
+        <section class="modal__conteudo" role="dialog" aria-modal="true" aria-labelledby="titulo-protocolos">
+          <header class="modal__cabecalho">
+            <div>
+              <p class="pagina-protocolos__sobretitulo">Apoio à decisão</p>
+              <h2 id="titulo-protocolos">Ajuda clínica</h2>
+            </div>
+            <button class="modal__fechar" type="button" data-fechar-protocolos aria-label="Fechar protocolos">×</button>
+          </header>
+          <div class="ajuda-clinica" data-ajuda-clinica>
+            <p class="ajuda-clinica__pergunta" data-ajuda-titulo>Precisa de orientação para continuar?</p>
+            <p class="ajuda-clinica__texto" data-ajuda-texto>O sistema apresentará uma orientação baseada no estado clínico que já está visível.</p>
+            <div class="ajuda-clinica__impacto" hidden data-ajuda-impacto></div>
+            <div class="ajuda-clinica__acoes">
+              <button class="botao botao--suave" type="button" data-fechar-protocolos>Fechar</button>
+              <button class="botao botao--ajuda" type="button" data-avancar-ajuda>Mostrar orientação</button>
+            </div>
+          </div>
+        </section>
       </div>
 
-      <div class="cabecalho__fim">
-        <span class="cronometro" title="Tempo restante da simulação">
-          <span class="cronometro__icone" aria-hidden="true">⏱</span>
-          <span class="cronometro__valor">4:59</span>
-        </span>
-        <span class="selo selo--perigo">Instável</span>
-      </div>
-    </header>
+      <!-- ===================== RODAPÉ ===================== -->
+      <footer class="rodape">
+        <p>
+          FIAP · Engenharia de Software · Challenge Hospital Moinhos de Vento ·
+          Sprint 3
+        </p>
+      </footer>
+    </div>
 
-    <!-- ===================== CONTEÚDO PRINCIPAL ===================== -->
-    <main class="simulador" id="conteudo-principal">
-
-      <!-- Painel clínico: sinais vitais + sintomas -->
-      <section class="painel-clinico" aria-label="Estado clínico do paciente">
-
-        <article class="cartao">
-          <h2 class="cartao__titulo">Sinais vitais</h2>
-          <ul class="sinais-vitais">
-            <li class="sinal-vital">
-              <div class="sinal-vital__barra">
-                <span class="sinal-vital__barra-preenchimento sinal-vital__barra-preenchimento--alta"
-                      title="Em elevação" aria-label="Em elevação, acima do normal"></span>
-              </div>
-              <div class="sinal-vital__conteudo">
-                <span class="sinal-vital__rotulo">PA</span>
-                <span class="sinal-vital__valor">154/92 <small>mmHg</small></span>
-              </div>
-            </li>
-            <li class="sinal-vital">
-              <div class="sinal-vital__barra">
-                <span class="sinal-vital__barra-preenchimento sinal-vital__barra-preenchimento--alta"
-                      title="Em elevação" aria-label="Em elevação, acima do normal"></span>
-              </div>
-              <div class="sinal-vital__conteudo">
-                <span class="sinal-vital__rotulo">FC</span>
-                <span class="sinal-vital__valor">101 <small>bpm</small></span>
-              </div>
-            </li>
-            <li class="sinal-vital">
-              <div class="sinal-vital__barra">
-                <span class="sinal-vital__barra-preenchimento sinal-vital__barra-preenchimento--alta"
-                      title="Em elevação" aria-label="Em elevação, acima do normal"></span>
-              </div>
-              <div class="sinal-vital__conteudo">
-                <span class="sinal-vital__rotulo">FR</span>
-                <span class="sinal-vital__valor">18 <small>irpm</small></span>
-              </div>
-            </li>
-            <li class="sinal-vital">
-              <div class="sinal-vital__barra">
-                <span class="sinal-vital__barra-preenchimento sinal-vital__barra-preenchimento--baixa"
-                      title="Em queda" aria-label="Em queda, abaixo do normal"></span>
-              </div>
-              <div class="sinal-vital__conteudo">
-                <span class="sinal-vital__rotulo">SpO₂</span>
-                <span class="sinal-vital__valor">96<small>%</small></span>
-              </div>
-            </li>
-          </ul>
-        </article>
-
-        <article class="cartao">
-          <h2 class="cartao__titulo">Sintomas <span class="cartao__titulo-contagem">(2)</span></h2>
-          <ul class="lista-sintomas">
-            <li class="sintoma sintoma--alto">
-              <div class="sintoma__linha">
-                <span class="sintoma__nome">Dor torácica</span>
-                <span class="sintoma__pontuacao">8.0/10</span>
-              </div>
-              <div class="sintoma__barra"><span style="width: 80%;"></span></div>
-            </li>
-            <li class="sintoma sintoma--medio">
-              <div class="sintoma__linha">
-                <span class="sintoma__nome">Sudorese fria</span>
-                <span class="sintoma__pontuacao">6.5/10</span>
-              </div>
-              <div class="sintoma__barra"><span style="width: 65%;"></span></div>
-            </li>
-          </ul>
-
-          <button class="botao botao--suave botao--bloco" type="button">Protocolos</button>
-        </article>
-      </section>
-
-      <!-- Conversa com o paciente -->
-      <section class="painel-conversa" id="painel-conversa" aria-label="Conversa com o paciente simulado">
-
-        <ol class="registro-conversa">
-          <li class="mensagem mensagem--ia">
-            <span class="mensagem__autor">IA</span>
-            <p class="mensagem__texto">Simulação iniciada. Tempo disponível: 5:00. Investigue e trate o paciente — o quadro evolui se você demorar.</p>
-          </li>
-          <li class="mensagem mensagem--paciente">
-            <span class="mensagem__autor">Paciente</span>
-            <p class="mensagem__texto">Doutor(a), estou com uma dor forte no peito há umas duas horas... Estou suando frio e com medo.</p>
-          </li>
-        </ol>
-
-        <div class="entrada-conversa">
-          <label class="apenas-leitor-de-tela" for="campo-mensagem">Escreva uma pergunta, investigação ou conduta</label>
-          <input class="entrada-conversa__campo" id="campo-mensagem" type="text"
-                 placeholder="Pergunte, investigue ou indique conduta…">
-          <button class="botao botao--enviar" type="button" aria-label="Enviar mensagem">➤</button>
-        </div>
-      </section>
-
-    </main>
-
-    <!-- ===================== RODAPÉ ===================== -->
-    <footer class="rodape">
-      <p>FIAP · Engenharia de Software · Challenge Hospital Moinhos de Vento · Sprint 3</p>
-    </footer>
-  </div>
-
-  <script src="js/main.js"></script>
-</body>
+    <script src="js/simulacao.js"></script>
+  </body>
 </html>
