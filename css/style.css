@@ -9,3 +9,168 @@
 :where(h1, h2, h3, p) {
   margin: 0;
 }
+
+.registro-conversa {
+  min-height: 0;
+}
+
+.mensagem {
+  display: flex;
+  width: fit-content;
+  max-width: min(86%, 34rem);
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  color: #2b2b2b;
+  overflow-wrap: anywhere;
+}
+
+.mensagem--paciente {
+  align-self: flex-start;
+  background: #f5f7fa;
+}
+
+.mensagem--medico {
+  align-self: flex-end;
+  background: #e6f0ff;
+}
+
+.mensagem__autor {
+  color: #677285;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.mensagem--medico .mensagem__autor {
+  color: #005bbf;
+}
+
+.mensagem__horario {
+  color: #8b95a7;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.mensagem__texto {
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+.sinal-vital {
+  position: relative;
+}
+
+.sinal-vital::after {
+  position: absolute;
+  bottom: calc(100% + 0.5rem);
+  left: 0.75rem;
+  z-index: 2;
+  max-width: 16rem;
+  padding: 0.375rem 0.5rem;
+  border-radius: 0.25rem;
+  background: #1f3a5f;
+  color: #fff;
+  content: attr(data-nome);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1.2;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(0.25rem);
+  transition: opacity 140ms ease, transform 140ms ease;
+  white-space: nowrap;
+}
+
+.sinal-vital:hover::after,
+.sinal-vital:focus-visible::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.sinal-vital__barra-preenchimento {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  display: block;
+  border-radius: 999px;
+}
+
+.sinal-vital__barra-preenchimento--alta {
+  background: #d93b3b;
+}
+
+.sinal-vital__barra-preenchimento--normal {
+  background: #1e9d67;
+}
+
+.sinal-vital__barra-preenchimento--baixa {
+  background: #2c6fe0;
+}
+
+.sintoma--alto {
+  background: rgb(217 59 59 / 10%);
+}
+
+.sintoma--medio {
+  background: rgb(217 138 31 / 10%);
+}
+
+.sintoma--baixo {
+  background: rgb(44 111 224 / 10%);
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgb(31 58 95 / 45%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 160ms ease;
+}
+
+.modal--aberto {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal__janela {
+  position: relative;
+  width: min(100%, 32rem);
+  padding: 1.5rem;
+  border: 1px solid #dadde3;
+  border-radius: 0.5rem;
+  background: #fff;
+  box-shadow: 0 16px 40px rgb(31 58 95 / 20%);
+}
+
+.modal__fechar {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  border-radius: 0.375rem;
+  background: #f5f7fa;
+  color: #677285;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* ===================== RESPONSIVE ====================== */ 
+
+@media (max-width: 900px) {
+  #conteudo-principal {
+    grid-template-columns: 1fr;
+  }
+}
