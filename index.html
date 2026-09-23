@@ -10,7 +10,6 @@
     />
     <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
 
-    <!-- Fonte, carregada via <link> (não via @import dentro do CSS). -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -18,27 +17,11 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
     />
 
-    <!--
-      CSS do Tailwind já compilado (build estático via @tailwindcss/cli).
-      O compilador ao vivo do CDN (@tailwindcss/browser@4) trava com um erro
-      ("Cannot apply unknown utility class `inset-x-0`") ao processar o
-      @apply de .sinal-vital__barra-preenchimento, e isso derruba TODO o CSS
-      da página. O build estático não tem esse bug. As classes Tailwind no
-      HTML continuam exatamente as mesmas de sempre — isso só troca "quem"
-      transforma as classes em CSS de verdade.
-      Para recompilar depois de mudar classes: veja css/README-build.md
-    -->
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body
     class="flex min-h-screen flex-col bg-white font-sans text-[0.875rem] leading-[1.45] text-texto has-[.modal--aberto]:overflow-hidden"
   >
-    <a
-      class="absolute -top-12 left-3 z-100 rounded-lg bg-destaque px-4 py-2 text-white transition-[top] duration-200 focus:top-3"
-      href="#painel-conversa"
-      >Pular para a conversa com o paciente</a
-    >
-
     <div class="flex min-h-screen flex-1 flex-col">
       <!-- ===================== CABEÇALHO ===================== -->
       <header
