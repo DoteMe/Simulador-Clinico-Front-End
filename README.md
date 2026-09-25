@@ -4,6 +4,18 @@ Protótipo front-end de uma simulação clínica conversacional. O estudante dig
 
 A versão atual contém o caso **Crise asmática aguda**, com o paciente simulado **Carlos Mendes**. O diagnóstico fica oculto durante a investigação e é revelado no feedback final.
 
+## Links importantes
+
+Repositório GitHub: https://github.com/DoteMe/Simulador-Clinico-Front-End
+Deploy Vercel: https://simulador-clinico-front-end.vercel.app
+
+## Tecnologias Utilizadas
+
+- HTML5
+- CSS3
+- JavaScript
+- TailwindCSS
+
 ## Executando
 
 Não há build nem dependências externas. Abra `index.html` diretamente ou execute:
