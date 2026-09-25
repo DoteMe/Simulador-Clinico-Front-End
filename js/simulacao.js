@@ -123,6 +123,251 @@
     },
 
   ];
+  // ==========================================================================
+  // ANÁLISE MATEMÁTICA DA EVOLUÇÃO (Cálculo I — derivada e limite)
+  // Módulo independente: não altera "estadosClinicos" nem a lógica original
+  // do simulador. Usa apenas os dados que já existem acima.
+  // ==========================================================================
+
+  // Valor de referência definido para ESTA simulação (regra do jogo,
+  // não uma recomendação médica universal).
+  const LIMITE_ATENCAO_SPO2 = 90;
+
+  // Aproximação numérica da derivada entre dois pontos consecutivos:
+  // taxa de variação = (S(t2) - S(t1)) / (t2 - t1)
+  function calcularTaxaVariacao(valorAtual, valorAnterior, tempoAtual, tempoAnterior) {
+    return (valorAtual - valorAnterior) / (tempoAtual - tempoAnterior);
+  }
+
+  // Verifica se a SpO2 está abaixo do limite de atenção definido.
+  function verificarLimiteSpO2(spo2, limite) {
+    return spo2 < limite;
+  }
+
+  // Cada estado clínico já definido em "estadosClinicos" representa 1 minuto
+  // da evolução do caso: t = índice do estado. Constrói os pares (t, valor)
+  // para qualquer sinal já existente (ex.: "spo2", "fr"), permitindo reaplicar
+  // a mesma lógica a mais de um indicador (ver ETAPA 12 / passo 19 do guia).
+  function construirSerieDoSinal(chaveSinal) {
+    return estadosClinicos.map((estado, indice) => ({
+      tempo: indice,
+      valor: Number(estado.sinais[chaveSinal][0]),
+    }));
+  }
+
+  // Calcula a taxa de variação (derivada aproximada) entre cada par de
+  // estados consecutivos e guarda o resultado de cada intervalo.
+  function calcularIntervalosDeVariacao(serie) {
+    const intervalos = [];
+    for (let indice = 1; indice < serie.length; indice += 1) {
+      const anterior = serie[indice - 1];
+      const atual = serie[indice];
+      intervalos.push({
+        tempoInicial: anterior.tempo,
+        tempoFinal: atual.tempo,
+        valorInicial: anterior.valor,
+        valorFinal: atual.valor,
+        taxa: calcularTaxaVariacao(atual.valor, anterior.valor, atual.tempo, anterior.tempo),
+      });
+    }
+    return intervalos;
+  }
+
+  function calcularAnaliseMatematica() {
+    const serie = construirSerieDoSinal("spo2");
+    const intervalos = calcularIntervalosDeVariacao(serie);
+    const maiorQueda = intervalos.reduce((menor, atual) => (atual.taxa < menor.taxa ? atual : menor), intervalos[0]);
+    const maiorRecuperacao = intervalos.reduce((maior, atual) => (atual.taxa > maior.taxa ? atual : maior), intervalos[0]);
+    const ultimoPonto = serie[serie.length - 1];
+    const ultimoIntervalo = intervalos[intervalos.length - 1];
+
+    return {
+      serie,
+      intervalos,
+      maiorQueda,
+      maiorRecuperacao,
+      limite: LIMITE_ATENCAO_SPO2,
+      // Ponto de maior agravamento (menor SpO2 do caso): usado para
+      // demonstrar o conceito de limite quando t se aproxima desse instante.
+      pontoCritico: { tempo: maiorQueda.tempoFinal, valor: maiorQueda.valorFinal },
+      ultrapassouLimite: serie.some((ponto) => verificarLimiteSpO2(ponto.valor, LIMITE_ATENCAO_SPO2)),
+      spo2Final: ultimoPonto.valor,
+      tendenciaFinal: ultimoIntervalo.taxa,
+    };
+  }
+
+  function formatarTaxa(taxa, unidade = "%/min") {
+    const arredondada = Math.round(taxa * 10) / 10;
+    const sinal = arredondada > 0 ? "+" : "";
+    const textoNumero = Number.isInteger(arredondada) ? arredondada.toFixed(0) : arredondada.toFixed(1);
+    return `${sinal}${textoNumero} ${unidade}`;
+  }
+
+  function interpretarIntervalo(taxa) {
+    if (taxa < -0.5) return "a SpO2 está diminuindo neste intervalo.";
+    if (taxa > 0.5) return "a SpO2 está aumentando neste intervalo.";
+    return "a SpO2 apresenta pouca variação neste intervalo.";
+  }
+
+  // Transforma o resultado matemático em uma interpretação em texto,
+  // sem afirmar que a taxa, sozinha, representa um diagnóstico real.
+  function gerarTextoInterpretativo(analise) {
+    const frases = [];
+    const tempoInicial = analise.serie[0].tempo;
+    const tempoFinal = analise.serie[analise.serie.length - 1].tempo;
+
+    frases.push(
+      `Entre ${tempoInicial} e ${tempoFinal} min, a SpO2 variou de ${analise.serie[0].valor}% para ${analise.spo2Final}%; ` +
+        interpretarIntervalo(analise.tendenciaFinal),
+    );
+
+    frases.push(
+      `Neste caso, a saturação apresentou sua maior velocidade de queda: ${formatarTaxa(analise.maiorQueda.taxa)} ` +
+        `(entre ${analise.maiorQueda.tempoInicial} e ${analise.maiorQueda.tempoFinal} min).`,
+    );
+
+    // Conceito de limite: comportamento de S(t) quando t se aproxima, pela
+    // esquerda, do instante de maior agravamento do caso (não apenas o
+    // alerta de limiar — aqui é a ideia matemática de aproximação em si).
+    frases.push(
+      `Pelo conceito de limite, à medida que t se aproxima de ${analise.pontoCritico.tempo} min pela esquerda, ` +
+        `S(t) se aproxima de ${analise.pontoCritico.valor}% — o ponto de maior agravamento registrado no caso.`,
+    );
+
+    if (analise.maiorRecuperacao.taxa > 0) {
+      frases.push(
+        `Após as condutas simuladas, a SpO2 apresentou recuperação de até ${formatarTaxa(analise.maiorRecuperacao.taxa)} ` +
+          `(entre ${analise.maiorRecuperacao.tempoInicial} e ${analise.maiorRecuperacao.tempoFinal} min).`,
+      );
+    }
+
+    if (analise.ultrapassouLimite) {
+      frases.push(
+        `ATENÇÃO: a saturação ultrapassou o limite de ${analise.limite}% definido para esta simulação ` +
+          `(regra do simulador, não uma recomendação médica universal).`,
+      );
+    }
+
+    return frases.join(" ");
+  }
+
+  // Monta o gráfico SpO2 x tempo como SVG inline, com a linha horizontal
+  // representando o limite de atenção definido para a simulação.
+  function construirGraficoSvg(analise) {
+    const largura = 320;
+    const altura = 180;
+    const margem = { topo: 14, direita: 14, baixo: 22, esquerda: 28 };
+    const areaLargura = largura - margem.esquerda - margem.direita;
+    const areaAltura = altura - margem.topo - margem.baixo;
+
+    const tempoMax = analise.serie[analise.serie.length - 1].tempo;
+    const valores = analise.serie.map((ponto) => ponto.valor);
+    const valorMin = Math.min(analise.limite, ...valores) - 4;
+    const valorMax = Math.max(...valores) + 4;
+
+    const x = (tempo) => margem.esquerda + (tempo / tempoMax) * areaLargura;
+    const y = (valor) => margem.topo + areaAltura - ((valor - valorMin) / (valorMax - valorMin)) * areaAltura;
+
+    const pontosLinha = analise.serie.map((ponto) => `${x(ponto.tempo)},${y(ponto.valor)}`).join(" ");
+    const circulos = analise.serie
+      .map((ponto) => {
+        const cor = verificarLimiteSpO2(ponto.valor, analise.limite) ? "var(--color-perigo)" : "var(--color-primaria)";
+        return `<circle cx="${x(ponto.tempo).toFixed(1)}" cy="${y(ponto.valor).toFixed(1)}" r="3" fill="${cor}"><title>${ponto.tempo} min: ${ponto.valor}%</title></circle>`;
+      })
+      .join("");
+
+    const yLimite = y(analise.limite);
+    const yEixoBase = altura - margem.baixo;
+
+    return `<svg viewBox="0 0 ${largura} ${altura}" role="img" aria-label="Gráfico da SpO2 ao longo do tempo, com linha de limite de atenção em ${analise.limite}%">
+      <line x1="${margem.esquerda}" y1="${yLimite.toFixed(1)}" x2="${largura - margem.direita}" y2="${yLimite.toFixed(1)}" stroke="var(--color-alerta)" stroke-width="1.25" stroke-dasharray="4 3" />
+      <text x="${largura - margem.direita}" y="${(yLimite - 4).toFixed(1)}" text-anchor="end" font-size="8" fill="var(--color-alerta)">limite ${analise.limite}%</text>
+      <polyline points="${pontosLinha}" fill="none" stroke="var(--color-primaria)" stroke-width="2" />
+      ${circulos}
+      <line x1="${margem.esquerda}" y1="${margem.topo}" x2="${margem.esquerda}" y2="${yEixoBase}" stroke="var(--color-borda)" />
+      <line x1="${margem.esquerda}" y1="${yEixoBase}" x2="${largura - margem.direita}" y2="${yEixoBase}" stroke="var(--color-borda)" />
+      <text x="${margem.esquerda}" y="${altura - 6}" font-size="8" fill="var(--color-texto-suave)">0 min</text>
+      <text x="${largura - margem.direita}" y="${altura - 6}" text-anchor="end" font-size="8" fill="var(--color-texto-suave)">${tempoMax} min</text>
+      <text x="2" y="${margem.topo + 2}" font-size="8" fill="var(--color-texto-suave)">SpO2 %</text>
+    </svg>`;
+  }
+
+  // ---- Segundo indicador (ETAPA 12 / passo 19 do guia): Frequência
+  // Respiratória (FR) ----
+  // Reaplica exatamente a mesma função de derivada usada para a SpO2.
+  // Diferença de interpretação: para a FR, um AUMENTO indica piora e uma
+  // REDUÇÃO indica recuperação — o oposto da SpO2 — por isso os extremos
+  // são tratados de forma invertida aqui.
+  function calcularAnaliseFR() {
+    const serie = construirSerieDoSinal("fr");
+    const intervalos = calcularIntervalosDeVariacao(serie);
+    const maiorPiora = intervalos.reduce((maior, atual) => (atual.taxa > maior.taxa ? atual : maior), intervalos[0]);
+    const maiorRecuperacao = intervalos.reduce((menor, atual) => (atual.taxa < menor.taxa ? atual : menor), intervalos[0]);
+    const ultimoPonto = serie[serie.length - 1];
+
+    return { serie, intervalos, maiorPiora, maiorRecuperacao, frFinal: ultimoPonto.valor };
+  }
+
+  // Compara os dois indicadores, como sugerido no guia: SpO2 cai e depois
+  // recupera; FR sobe e depois recua.
+  function gerarTextoComparativoFR(analiseFr) {
+    return (
+      `Como segundo indicador, a FR segue o padrão oposto ao da SpO2 neste caso: enquanto a SpO2 caiu e depois ` +
+      `se recuperou, a FR subiu durante a piora (maior aumento: ${formatarTaxa(analiseFr.maiorPiora.taxa, "irpm/min")}, ` +
+      `entre ${analiseFr.maiorPiora.tempoInicial} e ${analiseFr.maiorPiora.tempoFinal} min) e caiu durante a ` +
+      `recuperação (maior redução: ${formatarTaxa(analiseFr.maiorRecuperacao.taxa, "irpm/min")}, entre ` +
+      `${analiseFr.maiorRecuperacao.tempoInicial} e ${analiseFr.maiorRecuperacao.tempoFinal} min).`
+    );
+  }
+
+  // Preenche a seção "Análise Matemática da Evolução" na tela de resultado.
+  // Não é digitado nada manualmente no HTML: todos os números vêm do cálculo acima.
+  function renderizarAnaliseMatematica() {
+    const analise = calcularAnaliseMatematica();
+
+    const grafico = document.querySelector("[data-analise-grafico]");
+    if (grafico) grafico.innerHTML = construirGraficoSvg(analise);
+
+    const spo2Atual = document.querySelector("[data-analise-spo2-atual]");
+    if (spo2Atual) spo2Atual.textContent = `${analise.spo2Final}%`;
+
+    const maiorQueda = document.querySelector("[data-analise-maior-queda]");
+    if (maiorQueda) maiorQueda.textContent = formatarTaxa(analise.maiorQueda.taxa);
+
+    const maiorRecuperacao = document.querySelector("[data-analise-maior-recuperacao]");
+    if (maiorRecuperacao) maiorRecuperacao.textContent = formatarTaxa(analise.maiorRecuperacao.taxa);
+
+    const limite = document.querySelector("[data-analise-limite]");
+    if (limite) limite.textContent = `${analise.limite}% de SpO2`;
+
+    const tendenciaWrapper = document.querySelector("[data-analise-tendencia-wrapper]");
+    const tendencia = document.querySelector("[data-analise-tendencia]");
+    if (tendencia && tendenciaWrapper) {
+      const emRecuperacao = analise.tendenciaFinal > 0.5;
+      const emPiora = analise.tendenciaFinal < -0.5;
+      tendencia.textContent = emRecuperacao ? "Recuperação" : emPiora ? "Piora" : "Estável";
+      tendenciaWrapper.dataset.tendencia = emRecuperacao ? "recuperacao" : emPiora ? "piora" : "estavel";
+    }
+
+    const interpretacao = document.querySelector("[data-analise-interpretacao]");
+    if (interpretacao) interpretacao.textContent = gerarTextoInterpretativo(analise);
+
+    // Segundo indicador (FR) — ETAPA 12 / passo 19 do guia
+    const analiseFr = calcularAnaliseFR();
+
+    const frFinal = document.querySelector("[data-analise-fr-final]");
+    if (frFinal) frFinal.textContent = `${analiseFr.frFinal} irpm`;
+
+    const frPiora = document.querySelector("[data-analise-fr-piora]");
+    if (frPiora) frPiora.textContent = formatarTaxa(analiseFr.maiorPiora.taxa, "irpm/min");
+
+    const frRecuperacao = document.querySelector("[data-analise-fr-recuperacao]");
+    if (frRecuperacao) frRecuperacao.textContent = formatarTaxa(analiseFr.maiorRecuperacao.taxa, "irpm/min");
+
+    const frComparativo = document.querySelector("[data-analise-fr-comparativo]");
+    if (frComparativo) frComparativo.textContent = gerarTextoComparativoFR(analiseFr);
+  }
+
   function normalizarTexto(texto) {
     return texto
       .normalize("NFD")
@@ -394,6 +639,7 @@
     feedbackFinal.querySelector("[data-feedback-ajuda]").textContent = maiorNivelAjuda ? `Nível ${maiorNivelAjuda}` : "Nenhuma";
     feedbackFinal.querySelector("[data-feedback-acertos]").textContent = textos.acertos;
     feedbackFinal.querySelector("[data-feedback-melhorias]").textContent = textos.melhorias;
+    renderizarAnaliseMatematica();
   }
 
   function encerrarSimulacao(motivo) {
