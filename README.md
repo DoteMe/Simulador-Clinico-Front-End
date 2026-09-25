@@ -7,6 +7,7 @@ A versão atual contém o caso **Crise asmática aguda**, com o paciente simulad
 ## Links importantes
 
 Repositório GitHub: https://github.com/DoteMe/Simulador-Clinico-Front-End
+
 Deploy Vercel: https://simulador-clinico-front-end.vercel.app
 
 ## Tecnologias Utilizadas
