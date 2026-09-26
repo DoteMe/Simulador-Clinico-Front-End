@@ -459,6 +459,78 @@
               <p data-feedback-melhorias></p>
             </article>
           </div>
+
+          <section
+            class="analise-matematica"
+            aria-label="Análise matemática da evolução clínica"
+          >
+            <header class="analise-matematica__cabecalho">
+              <h3>Análise matemática da evolução</h3>
+              <p>
+                Cálculo I aplicado à SpO₂ registrada no caso: a derivada mede
+                a velocidade de variação do sinal e o limite descreve sua
+                aproximação da condição crítica definida nesta simulação.
+              </p>
+            </header>
+            <div class="analise-matematica__corpo">
+              <div
+                class="analise-matematica__grafico"
+                data-analise-grafico
+              ></div>
+              <dl class="analise-matematica__indicadores">
+                <div>
+                  <dt>SpO₂ ao final do caso</dt>
+                  <dd data-analise-spo2-atual>—</dd>
+                </div>
+                <div>
+                  <dt>Maior queda</dt>
+                  <dd data-analise-maior-queda>—</dd>
+                </div>
+                <div>
+                  <dt>Maior recuperação</dt>
+                  <dd data-analise-maior-recuperacao>—</dd>
+                </div>
+                <div>
+                  <dt>Limite de atenção usado</dt>
+                  <dd data-analise-limite>—</dd>
+                </div>
+                <div
+                  class="analise-matematica__tendencia"
+                  data-analise-tendencia-wrapper
+                >
+                  <dt>Tendência</dt>
+                  <dd data-analise-tendencia>—</dd>
+                </div>
+              </dl>
+            </div>
+            <p
+              class="analise-matematica__interpretacao"
+              data-analise-interpretacao
+            ></p>
+
+            <div class="analise-matematica__segundo-indicador">
+              <h4>Segundo indicador: Frequência Respiratória (FR)</h4>
+              <dl class="analise-matematica__indicadores">
+                <div>
+                  <dt>FR ao final do caso</dt>
+                  <dd data-analise-fr-final>—</dd>
+                </div>
+                <div>
+                  <dt>Maior piora (aumento)</dt>
+                  <dd data-analise-fr-piora>—</dd>
+                </div>
+                <div>
+                  <dt>Maior recuperação (redução)</dt>
+                  <dd data-analise-fr-recuperacao>—</dd>
+                </div>
+              </dl>
+              <p
+                class="analise-matematica__interpretacao"
+                data-analise-fr-comparativo
+              ></p>
+            </div>
+          </section>
+
           <button type="button" data-reiniciar-simulacao>
             Tentar novamente
           </button>

@@ -2110,6 +2110,65 @@ body:has(.feedback-final--aberto) { overflow: hidden; }
 .feedback-final__diagnostico strong { color: var(--color-marinho-900); font-size: 1rem; }
 .feedback-final__diagnostico p { color: var(--color-texto-suave); font-size: 0.78rem; line-height: 1.5; }
 
+/* Análise Matemática da Evolução (Cálculo I: derivada e limite aplicados à SpO2) */
+.analise-matematica {
+  margin-top: 1.25rem;
+  padding: 1.1rem 1.25rem 1.3rem;
+  border: 1px solid var(--color-borda);
+  border-radius: 0.9rem;
+  background: rgba(0, 91, 191, 0.04);
+}
+.analise-matematica__cabecalho h3 { color: var(--color-marinho-900); font-size: 0.95rem; font-weight: 750; }
+.analise-matematica__cabecalho p { margin-top: 0.3rem; max-width: 42rem; color: var(--color-texto-suave); font-size: 0.78rem; line-height: 1.5; }
+.analise-matematica__corpo {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 1rem;
+  margin-top: 0.9rem;
+  align-items: start;
+}
+.analise-matematica__grafico { min-width: 0; }
+.analise-matematica__grafico svg { width: 100%; height: auto; display: block; }
+.analise-matematica__indicadores {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+  align-content: start;
+}
+.analise-matematica__indicadores div {
+  padding: 0.6rem 0.7rem;
+  border: 1px solid rgba(0, 91, 191, 0.14);
+  border-radius: 0.65rem;
+  background: white;
+}
+.analise-matematica__indicadores dt { color: var(--color-texto-suave); font-size: 0.65rem; }
+.analise-matematica__indicadores dd { margin-top: 0.15rem; color: var(--color-marinho-900); font-size: 0.95rem; font-weight: 700; }
+.analise-matematica__tendencia { grid-column: 1 / -1; }
+.analise-matematica__tendencia[data-tendencia="recuperacao"] dd { color: var(--color-normal); }
+.analise-matematica__tendencia[data-tendencia="piora"] dd { color: var(--color-perigo); }
+.analise-matematica__interpretacao {
+  margin-top: 0.9rem;
+  padding: 0.75rem 0.9rem;
+  border-left: 3px solid var(--color-primaria);
+  border-radius: 0.25rem 0.6rem 0.6rem 0.25rem;
+  background: var(--color-primaria-suave);
+  color: var(--color-texto);
+  font-size: 0.8rem;
+  line-height: 1.55;
+}
+.analise-matematica__segundo-indicador {
+  margin-top: 1rem;
+  padding-top: 0.9rem;
+  border-top: 1px dashed var(--color-borda);
+}
+.analise-matematica__segundo-indicador h4 { color: var(--color-marinho-900); font-size: 0.82rem; font-weight: 700; margin-bottom: 0.55rem; }
+.analise-matematica__segundo-indicador .analise-matematica__indicadores { grid-template-columns: repeat(3, 1fr); }
+.analise-matematica__segundo-indicador .analise-matematica__interpretacao { margin-top: 0.7rem; }
+@media (max-width: 40rem) {
+  .analise-matematica__corpo { grid-template-columns: 1fr; }
+  .analise-matematica__segundo-indicador .analise-matematica__indicadores { grid-template-columns: 1fr 1fr; }
+}
+
 /* Paciente e mobiliário compartilham a mesma escala e o mesmo piso. */
 .pixel-patient { top: 390px !important; transform: translateX(-50%); transform-origin: center bottom; }
 @media (max-width: 64rem) {
