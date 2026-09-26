@@ -237,3 +237,159 @@ Checklist:
 ## Assets
 
 O personagem usa o pacote `Assets Pixel Art - Hospital.zip`, fornecido pelo responsável do projeto. A sala e os móveis são desenhados pela interface para evitar recortes inconsistentes das folhas de sprites. O arquivo recebido não contém licença; confirme os direitos de redistribuição antes de publicar.
+
+
+# Integração de Cálculo I ao Simulador Clínico — LXP Moinhos
+
+**Disciplina:** Cálculo (Differentiated Problem Solving)
+**Projeto:** Simulador Clínico — LXP Moinhos (Challenge FIAP × Hospital Moinhos de Vento)
+**Caso clínico:** Exacerbação aguda de asma (crise asmática) — paciente simulado Carlos Mendes
+
+## Integrantes do grupo
+
+Integrantes: 
+• RM 573865 – João Victor Sant'Ana Cortabitart 
+• RM 574025 – João Victor Barbon Naymayer 
+• RM 573678 – João Vitor Dutra de Freitas
+
+---
+
+## 1. Objetivo
+
+Integrar os conceitos de **limite** e **derivada** (Cálculo I) ao Simulador Clínico já desenvolvido pelo grupo, **sem criar uma calculadora matemática separada**. A matemática analisa a evolução dos sinais vitais que o próprio simulador já possui e aparece na interface como uma ferramenta de interpretação e apoio à decisão, na tela de resultado final do atendimento.
+
+## 2. Fenômeno analisado
+
+> Como a saturação de oxigênio (SpO₂) do paciente varia ao longo do tempo, e como essa variação muda durante a piora e a recuperação do quadro clínico.
+
+Como segundo indicador, comparamos esse comportamento com o da **frequência respiratória (FR)**, que evolui no sentido oposto ao da SpO₂ no mesmo caso.
+
+## 3. Variáveis
+
+| Variável | Significado | Unidade |
+| --- | --- | --- |
+| `t` | tempo da simulação (cada estado clínico já existente no simulador corresponde a 1 minuto) | min |
+| `S(t)` | saturação de oxigênio (SpO₂) em função do tempo — indicador principal | % |
+| `FR(t)` | frequência respiratória em função do tempo — segundo indicador, usado por comparação | irpm |
+
+## 4. Dados utilizados
+
+Os dados **já existiam** no arquivo `js/simulacao.js` (array `estadosClinicos`, 7 estados clínicos do caso). Nenhum dado foi inventado; a matemática apenas lê esses valores:
+
+| t (min) | SpO₂ (%) | FR (irpm) |
+| :-: | :-: | :-: |
+| 0 | 92 | 26 |
+| 1 | 90 | 30 |
+| 2 | 87 | 34 |
+| 3 | 82 | 38 |
+| 4 | 95 | 23 |
+| 5 | 97 | 20 |
+| 6 | 98 | 18 |
+
+## 5. Onde a derivada é utilizada
+
+A derivada é aproximada numericamente pela taxa de variação média entre dois estados consecutivos:
+
+```
+taxa de variação = (S(t2) − S(t1)) / (t2 − t1)
+```
+
+Implementada de forma independente em `js/simulacao.js`:
+
+```js
+function calcularTaxaVariacao(valorAtual, valorAnterior, tempoAtual, tempoAnterior) {
+  return (valorAtual - valorAnterior) / (tempoAtual - tempoAnterior);
+}
+```
+
+Essa mesma função é reaproveitada tanto para a SpO₂ quanto para a FR. Resultado no caso simulado:
+
+| Intervalo | Taxa de variação da SpO₂ |
+| --- | --- |
+| 0 → 1 min | −2 %/min |
+| 1 → 2 min | −3 %/min |
+| 2 → 3 min | **−5 %/min (maior queda)** |
+| 3 → 4 min | **+13 %/min (maior recuperação)** |
+| 4 → 5 min | +2 %/min |
+| 5 → 6 min | +1 %/min |
+
+A queda fica cada vez mais rápida até o minuto 3 (piora) e depois se torna fortemente positiva (recuperação após as condutas), confirmando o padrão descrito no fenômeno analisado.
+
+## 6. Onde o limite é utilizado
+
+Dois usos distintos do conceito de limite foram implementados:
+
+**a) Aproximação do ponto de maior agravamento (o limite propriamente dito)**
+
+À medida que `t` se aproxima de 3 minutos pela esquerda, `S(t)` se aproxima de 82% — o ponto de maior agravamento do caso:
+
+```
+lim S(t), quando t → 3⁻, = 82
+```
+
+**b) Limite de atenção definido para a simulação (regra do jogo)**
+
+```js
+function verificarLimiteSpO2(spo2, limite) {
+  return spo2 < limite;
+}
+```
+
+Valor de referência: **90% de SpO₂**. Quando a série cruza esse valor, a interface exibe um alerta. Esse limite é uma regra definida pelo grupo para esta simulação, **não uma recomendação médica universal**.
+
+## 7. Segundo indicador: frequência respiratória (FR)
+
+Depois de validar a SpO₂, a mesma lógica foi reaplicada à FR, permitindo comparar dois indicadores com comportamentos opostos:
+
+| Indicador | Padrão observado |
+| --- | --- |
+| SpO₂ | cai durante a piora → sobe durante a recuperação |
+| FR | sobe durante a piora → cai durante a recuperação |
+
+No caso simulado: maior aumento da FR de **+4 irpm/min** (piora) e maior redução de **−15 irpm/min** (recuperação), entre os minutos 3 e 4 — exatamente quando a SpO₂ também vira para a recuperação.
+
+## 8. Como o resultado aparece na interface
+
+Ao final do atendimento (tela de resultado), uma nova seção **"Análise Matemática da Evolução"** é exibida com:
+
+1. gráfico SpO₂ × tempo, com a linha horizontal do limite de atenção;
+2. indicadores numéricos (SpO₂ final, maior queda, maior recuperação, limite usado, tendência);
+3. texto interpretativo gerado automaticamente (nenhum número é digitado manualmente no HTML);
+4. bloco do segundo indicador (FR), com o comparativo entre os dois sinais.
+
+![Seção Análise Matemática da Evolução](assets/calculo/analise-matematica-evolucao.png)
+
+## 9. Como essa matemática ajuda o usuário
+
+A derivada permite identificar não apenas se a SpO₂ está subindo ou descendo, mas **a velocidade** dessa mudança. O limite permite observar a aproximação do paciente a uma condição crítica definida na simulação. Juntas, essas ferramentas ajudam o estudante a interpretar a **tendência** de evolução do caso — e não só o valor pontual de um sinal vital — e a relacionar suas condutas com essa evolução.
+
+## 10. Implementação técnica
+
+| Arquivo | O que foi adicionado |
+| --- | --- |
+| `js/simulacao.js` | Módulo independente de análise matemática (funções de derivada, limite, série de dados, interpretação e gráfico SVG). Não altera `estadosClinicos` nem a lógica original do simulador. |
+| `index.html` | Seção `"Análise Matemática da Evolução"` dentro da tela de resultado final (`#feedback-final`). |
+| `css/style.css` | Estilos da nova seção, seguindo a mesma paleta e os mesmos componentes já usados no restante da interface. |
+
+Principais funções criadas: `calcularTaxaVariacao`, `verificarLimiteSpO2`, `construirSerieDoSinal`, `calcularIntervalosDeVariacao`, `calcularAnaliseMatematica`, `calcularAnaliseFR`, `gerarTextoInterpretativo`, `gerarTextoComparativoFR`, `construirGraficoSvg`, `renderizarAnaliseMatematica`.
+
+## 11. Como executar e ver a análise
+
+```bash
+python3 -m http.server 8000
+```
+
+Acesse `http://localhost:8000`, converse com o paciente (ou use o botão **"Avançar +1 min"** repetidamente) até o atendimento ser encerrado. A seção de análise matemática aparece automaticamente na tela de resultado.
+
+## 12. O que este trabalho **não** faz (limitações intencionais)
+
+- Não cria uma tela separada só para matemática — a análise fica integrada ao resultado do atendimento.
+- Não digita nenhum resultado manualmente no HTML — todos os números vêm do cálculo em JavaScript.
+- Não substitui os dados clínicos nem a lógica original do simulador.
+- Não transforma o projeto em um sistema médico real.
+- Não apresenta o limite de 90% como uma regra médica universal, nem afirma que a derivada, sozinha, determina o estado clínico real de uma pessoa.
+
+## 13. Referências
+
+- Guia de Implementação da Matemática no Simulador (documento interno do grupo, base desta implementação).
+- README principal do projeto: [`README.md`](README.md).
